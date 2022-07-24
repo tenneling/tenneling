@@ -1,0 +1,20 @@
+spring.datasource.driver-class-name : com.mysql.cj.jdbc.Driver
+spring.datasource.url : jdbc:mysql://localhost:3306/tenneling?serverTimezone=UTC
+spring.datasource.username : springuser
+spring.datasource.password : springuser
+
+mybatis:
+  type-aliases-package: com.tenneling.entity
+  mapper-locations: classpath:mapper/*.xml
+
+wechat:
+  appId: wxac7b5e78bb3b0c1a
+  appSecret: f3d7bd7c50a9834de1bac9d226b01823
+  requestUrl: https://api.weixin.qq.com/sns/jscode2session
+
+spring:
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
