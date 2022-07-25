@@ -1,4 +1,4 @@
-package com.tenneling.entity.wechat;
+package com.tenneling.entity.base;
 
 import lombok.Getter;
 import lombok.Setter;

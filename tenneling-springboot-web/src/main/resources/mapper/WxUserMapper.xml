@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tenneling.dao.WxUserMapper" >
 
-    <resultMap id="BaseResultMap" type="com.tenneling.entity.wechat.WxUser" >
+    <resultMap id="BaseResultMap" type="com.tenneling.entity.base.WxUser" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="phoneNumber" property="phonenumber" jdbcType="VARCHAR" />
         <result column="openId" property="openid" jdbcType="VARCHAR" />
@@ -42,7 +42,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.tenneling.entity.wechat.WxUser" >
+    <insert id="insert" parameterType="com.tenneling.entity.base.WxUser" >
         insert into wx_user (id, phoneNumber, openId, 
             nickName, gender, country,
             city, province, avatarUrl, 
@@ -59,129 +59,7 @@
             #{updateTime,jdbcType=VARCHAR})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.tenneling.entity.wechat.WxUser" >
-        insert into wx_user
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                id,
-            </if>
-            <if test="phonenumber != null" >
-                phoneNumber,
-            </if>
-            <if test="openid != null" >
-                openId,
-            </if>
-            <if test="nickname != null" >
-                nickName,
-            </if>
-            <if test="gender != null" >
-                gender,
-            </if>
-            <if test="country != null" >
-                country,
-            </if>
-            <if test="city != null" >
-                city,
-            </if>
-            <if test="province != null" >
-                province,
-            </if>
-            <if test="avatarurl != null" >
-                avatarUrl,
-            </if>
-            <if test="unionid != null" >
-                unionId,
-            </if>
-            <if test="watermark != null" >
-                watermark,
-            </if>
-            <if test="rawdata != null" >
-                rawData,
-            </if>
-            <if test="cloudid != null" >
-                cloudId,
-            </if>
-            <if test="birthday != null" >
-                birthday,
-            </if>
-            <if test="email != null" >
-                email,
-            </if>
-            <if test="createUser != null" >
-                create_user,
-            </if>
-            <if test="createTime != null" >
-                create_time,
-            </if>
-            <if test="updateUser != null" >
-                update_user,
-            </if>
-            <if test="updateTime != null" >
-                update_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="phonenumber != null" >
-                #{phonenumber,jdbcType=VARCHAR},
-            </if>
-            <if test="openid != null" >
-                #{openid,jdbcType=VARCHAR},
-            </if>
-            <if test="nickname != null" >
-                #{nickname,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null" >
-                #{gender,jdbcType=VARCHAR},
-            </if>
-            <if test="country != null" >
-                #{country,jdbcType=VARCHAR},
-            </if>
-            <if test="city != null" >
-                #{city,jdbcType=VARCHAR},
-            </if>
-            <if test="province != null" >
-                #{province,jdbcType=VARCHAR},
-            </if>
-            <if test="avatarurl != null" >
-                #{avatarurl,jdbcType=VARCHAR},
-            </if>
-            <if test="unionid != null" >
-                #{unionid,jdbcType=VARCHAR},
-            </if>
-            <if test="watermark != null" >
-                #{watermark,jdbcType=VARCHAR},
-            </if>
-            <if test="rawdata != null" >
-                #{rawdata,jdbcType=VARCHAR},
-            </if>
-            <if test="cloudid != null" >
-                #{cloudid,jdbcType=VARCHAR},
-            </if>
-            <if test="birthday != null" >
-                #{birthday,jdbcType=DATE},
-            </if>
-            <if test="email != null" >
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="createUser != null" >
-                #{createUser,jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null" >
-                #{createTime,jdbcType=VARCHAR},
-            </if>
-            <if test="updateUser != null" >
-                #{updateUser,jdbcType=VARCHAR},
-            </if>
-            <if test="updateTime != null" >
-                #{updateTime,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-
-    <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.wechat.WxUser" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.WxUser" >
         update wx_user
         <set >
             <if test="phonenumber != null" >
@@ -239,29 +117,6 @@
                 update_time = #{updateTime,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-
-    <update id="updateByPrimaryKey" parameterType="com.tenneling.entity.wechat.WxUser" >
-        update wx_user
-        set phoneNumber = #{phonenumber,jdbcType=VARCHAR},
-            openId = #{openid,jdbcType=VARCHAR},
-            nickName = #{nickname,jdbcType=VARCHAR},
-            gender = #{gender,jdbcType=VARCHAR},
-            country = #{country,jdbcType=VARCHAR},
-            city = #{city,jdbcType=VARCHAR},
-            province = #{province,jdbcType=VARCHAR},
-            avatarUrl = #{avatarurl,jdbcType=VARCHAR},
-            unionId = #{unionid,jdbcType=VARCHAR},
-            watermark = #{watermark,jdbcType=VARCHAR},
-            rawData = #{rawdata,jdbcType=VARCHAR},
-            cloudId = #{cloudid,jdbcType=VARCHAR},
-            birthday = #{birthday,jdbcType=DATE},
-            email = #{email,jdbcType=VARCHAR},
-            create_user = #{createUser,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=VARCHAR},
-            update_user = #{updateUser,jdbcType=VARCHAR},
-            update_time = #{updateTime,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

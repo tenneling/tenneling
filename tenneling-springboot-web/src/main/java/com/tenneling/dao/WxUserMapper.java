@@ -1,6 +1,6 @@
 package com.tenneling.dao;
 
-import com.tenneling.entity.wechat.WxUser;
+import com.tenneling.entity.base.WxUser;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -10,13 +10,9 @@ public interface WxUserMapper {
 
     int insert(WxUser record);
 
-    int insertSelective(WxUser record);
-
     WxUser selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(WxUser record);
-
-    int updateByPrimaryKey(WxUser record);
 
     /**
      * 根据 openId 获取微信用户信息

@@ -49,7 +49,7 @@ public class WeChartUtils {
             byte[] resultByte = cipher.doFinal(dataByte);
             if (null != resultByte && resultByte.length > 0) {
                 String result = new String(resultByte, "UTF-8");
-
+                log.info("keyByte为{},result为{}",keyByte,result);
                 return JSONObject.parseObject(result);
             }
         } catch (Exception e) {

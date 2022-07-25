@@ -1,9 +1,7 @@
 package com.tenneling.constant;
 
-import javafx.scene.input.KeyCodeCombination;
-
 /**
- * @ Description:
+ * @ Description: 返回值枚举类
  * @ Author:wenyanni
  * @ Date:2022/7/24 14:38
  */

@@ -15,6 +15,6 @@ public class ReqWxUser {
     private String grant_type;
     private String iv;
     private String rawData;
-    private String signaturel;
-    private String encryteDate;
+    private String signature;
+    private String encryptedData;
 }

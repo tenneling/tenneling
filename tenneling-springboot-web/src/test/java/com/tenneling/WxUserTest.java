@@ -2,9 +2,8 @@ package com.tenneling;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tenneling.dao.WxUserMapper;
-import com.tenneling.entity.wechat.RawData;
 import com.tenneling.entity.wechat.ReqWxUser;
-import com.tenneling.entity.wechat.WxUser;
+import com.tenneling.entity.base.WxUser;
 import com.tenneling.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -31,8 +30,8 @@ public class WxUserTest {
     @Test
     public void test02() throws JsonProcessingException {
         ReqWxUser reqWxUser = new ReqWxUser();
-        reqWxUser.setEncryteDate("wewew");
+        reqWxUser.setEncryptedData("wewew");
         reqWxUser.setIv("23232");
-        userService.userLogin("232",reqWxUser);
+        userService.userLogin(reqWxUser);
     }
 }
