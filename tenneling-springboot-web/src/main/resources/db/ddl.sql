@@ -16,7 +16,7 @@ CREATE TABLE tenneling.`wx_user` (
         country varchar(128) COMMENT '国别',
         city varchar(128) COMMENT '城市',
         province varchar(128) COMMENT '省份',
-        avatarUrl varchar(128) ,
+        avatarUrl varchar(1000) ,
         unionId varchar(128) ,
         watermark varchar(128) ,
         rawData varchar(128) ,
@@ -28,6 +28,19 @@ CREATE TABLE tenneling.`wx_user` (
         update_user varchar(50) COMMENT '更新人',
 	    update_time varchar(50) COMMENT '更新时间',
         PRIMARY KEY (id)
+);
+
+CREATE TABLE tenneling.`sys_para` (
+    id INT NOT NULL AUTO_INCREMENT COMMENT '流水ID',
+    PARA_KEY varchar(128) COMMENT 'key',
+    PARA_VALUE	varchar(500) COMMENT 'value',
+    DESCRIPTION	varchar(128) COMMENT '描述',
+    Status date COMMENT '状态',
+    create_user varchar(50) COMMENT '创建人',
+    create_time varchar(50) COMMENT '创建时间',
+    update_user varchar(50) COMMENT '更新人',
+    update_time varchar(50) COMMENT '更新时间',
+    PRIMARY KEY (id)
 );
 
 

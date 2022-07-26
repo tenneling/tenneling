@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tenneling.dao.SysParaMapper" >
+
+    <resultMap id="BaseResultMap" type="com.tenneling.entity.base.SysPara" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="PARA_KEY" property="paraKey" jdbcType="VARCHAR" />
+        <result column="PARA_VALUE" property="paraValue" jdbcType="VARCHAR" />
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="DATE" />
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, PARA_KEY, PARA_VALUE, DESCRIPTION, status, create_user, create_time, update_user, 
+        update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from sys_para
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getByKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_para
+        where PARA_KEY = #{paraKey,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from sys_para
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.tenneling.entity.base.SysPara" >
+        insert into sys_para (id, PARA_KEY, PARA_VALUE, 
+            DESCRIPTION, status, create_user, 
+            create_time, update_user, update_time
+            )
+        values (#{id,jdbcType=INTEGER}, #{paraKey,jdbcType=VARCHAR}, #{paraValue,jdbcType=VARCHAR}, 
+            #{description,jdbcType=VARCHAR}, #{status,jdbcType=DATE}, #{createUser,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.SysPara" >
+        update sys_para
+        <set >
+            <if test="paraKey != null" >
+                PARA_KEY = #{paraKey,jdbcType=VARCHAR},
+            </if>
+            <if test="paraValue != null" >
+                PARA_VALUE = #{paraValue,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                DESCRIPTION = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=DATE},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null" >
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

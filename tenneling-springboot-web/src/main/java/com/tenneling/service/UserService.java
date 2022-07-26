@@ -3,16 +3,17 @@ package com.tenneling.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tenneling.constant.ResultDataEnum;
+import com.tenneling.dao.SysParaMapper;
 import com.tenneling.dao.WxUserMapper;
+import com.tenneling.entity.base.SysPara;
+import com.tenneling.entity.base.WxUser;
 import com.tenneling.entity.wechat.RawData;
+import com.tenneling.entity.wechat.ReqPhone;
 import com.tenneling.entity.wechat.ReqWxUser;
 import com.tenneling.entity.wechat.ResWxUser;
-import com.tenneling.entity.base.WxUser;
 import com.tenneling.utils.WeChartUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -31,6 +32,8 @@ public class UserService {
     private RestTemplate restTemplate;
     @Autowired
     private WxUserMapper wxUserMapper;
+    @Autowired
+    private SysParaMapper sysParaMapper;
 
     @Value("${wechat.requestUrl}")
     private String requestUrl ;
@@ -38,6 +41,10 @@ public class UserService {
     private String secret ;
     @Value("${wechat.appId}")
     private String appid ;
+    @Value("${wechat.phoneUrl}")
+    private String phoneUrl ;
+    @Value("${wechat.accessTokenUrl}")
+    private String accessTokenUrl ;
 
     public ResWxUser userLogin(ReqWxUser reqWxUser) throws JsonProcessingException {
         log.info("前端入参：{}",reqWxUser);
@@ -58,6 +65,7 @@ public class UserService {
         WxUser wxUser = wxUserMapper.getWxUserByOpenId(resWxUser.getOpenid());
         if (wxUser == null){
             wxUser = new WxUser();
+            wxUser.setOpenid(resWxUser.getOpenid());
             wxUserMapper.insert(wxUser);
         }
         RawData rawData = JSON.parseObject(reqWxUser.getRawData(), RawData.class);
@@ -67,6 +75,8 @@ public class UserService {
         wxUser.setCity(rawData.getCity());
         wxUser.setCountry(rawData.getCountry());
         wxUser.setProvince(rawData.getProvince());
+        // 请求手机号
+        wxUser.setPhonenumber(this.getPhone(reqWxUser.getCode()));
         JSONObject encryptedData = WeChartUtils.getEncryptedData(reqWxUser.getEncryptedData(), resWxUser.getSession_key(), reqWxUser.getIv());
         if (encryptedData != null){
             String unionId = encryptedData.getString("unionId");
@@ -89,4 +99,24 @@ public class UserService {
         log.info("响应报文：[{}]", response.getBody());
         return JSONObject.parseObject(String.valueOf(response.getBody()),ResWxUser.class) ;
     }
+    private String getPhone(String codeId) throws JsonProcessingException {
+        //从配置表获取accessToken
+        SysPara sysPara = sysParaMapper.getByKey("ACCESS_TOKEN");
+        log.info("sysPara:{},{}",sysPara,sysPara.getParaValue());
+        HttpHeaders headers = new HttpHeaders();
+        headers.clear();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Accept", "application/json");
+        StringBuilder url = new StringBuilder(phoneUrl).append("?access_token=").append(sysPara.getParaValue());
+        ReqPhone reqPhone = new ReqPhone();
+        reqPhone.setCode(codeId);
+        //请求接口
+        HttpEntity<JSONObject> request = new HttpEntity(reqPhone,headers);
+        log.info("url:[{}],请求报文：[{}]", url.toString() , JSONObject.toJSONString(request));
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.postForEntity(phoneUrl,request, String.class);
+        log.info("响应报文：[{}]", response.getBody());
+        return JSONObject.parseObject(String.valueOf(response.getBody()),String.class) ;
+    }
+
 }
