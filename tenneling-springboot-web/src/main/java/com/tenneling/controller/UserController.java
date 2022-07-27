@@ -2,6 +2,7 @@ package com.tenneling.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tenneling.entity.wechat.ReqWxUser;
+import com.tenneling.entity.wechat.ResCommonBody;
 import com.tenneling.entity.wechat.ResWxUser;
 import com.tenneling.service.UserService;
 import io.swagger.annotations.Api;
@@ -25,6 +26,15 @@ public class UserController {
         ResWxUser resWxUser =  userService.userLogin(reqWxUser);
         log.info("返回前端：{}",resWxUser);
         return resWxUser;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/getPhone")
+    @ApiOperation(value="授权手机号", notes="授权手机号", httpMethod = "GET")
+    public ResCommonBody getPhone(@RequestBody String code) throws JsonProcessingException {
+        ResCommonBody resCommonBody = userService.getPhone(code);
+        log.info("返回前端：{}",resCommonBody);
+        return resCommonBody;
     }
 
 }

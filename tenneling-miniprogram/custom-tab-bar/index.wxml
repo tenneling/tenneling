@@ -1,0 +1,25 @@
+<!--component/tabBar/tabbar.wxml-->
+
+<view class="tabbar-flex">
+	<view class="tabbar" wx:for="{{list}}" wx:key="index" data-index="{{index}}" data-item="{{item}}" catchtap="selTabbar">
+		<view wx:if="{{item.isSpecial == true}}" class="scan-img-flex">
+			<image class="scan-img" src="{{item.iconPath}}" bindtap="onClickShow"></image>
+			<van-overlay show="{{ show }}" bind:click="onClickHide">
+                <view class="wrapper">
+                <view class="block" bindtap="addActivity">
+					<van-icon name="plus" />
+				    <view>发布活动</view>
+				 </view>
+				 <view class="block" >
+					<van-icon name="plus" />
+					<view>发布动态</view>
+				 </view>
+                </view>
+            </van-overlay>
+		</view>
+		<view wx:else class="tabbar-icon">
+			<image class="icon-img" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+			<view class="tabbar-title" style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
+		</view>
+	</view>
+</view>

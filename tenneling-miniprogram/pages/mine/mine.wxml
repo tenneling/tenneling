@@ -1,0 +1,38 @@
+<!--pages/mine/mine.wxml 我的-->
+<view class="mine-container" style="padding-top:{{statusBarHeight}}px;margin-bottom: 100rpx;box-sizing: border-box;">
+    <view class="top">
+        <view class="info-top">
+            <view style="display: flex;align-items: center;width: 70%;">
+                <view class='top-left'>
+                    <image class='top-img' mode="aspectFit" src='{{headImg}}'></image>
+                </view>
+                <view class="top-middle">
+                    <view >迪丽热巴</view>
+                    <view class="top-middle-type">
+                        <!-- <image></image> -->
+                        <text style="margin: 0 10rpx;">23</text>
+                        <text>星座</text>
+                    </view>
+                </view>
+            </view>
+            <view class="top-right" bindtap="goToInfo">
+                <text>编辑资料</text>
+                <van-icon style="margin-left: 10rpx;" name="setting-o" />
+            </view>
+        </view>
+        <view class="info-bottom">
+            <text>去编辑资料完善个人简介吧</text>
+        </view>
+    </view>
+    <view class="bottom">
+        <block wx:for="{{list}}"  wx:key="index" data-item="{{item}}" data-index="{{index}}">
+            <view class="bottom-all">
+                <view class="bottom-top">
+                    <text>{{item.name}}</text>
+                    <text>查看更多</text>
+                </view>
+                <image class='bottom-img' src="{{item.imgUrl}}"></image>
+            </view>
+        </block>
+    </view>
+</view>

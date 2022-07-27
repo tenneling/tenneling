@@ -1,0 +1,57 @@
+<!--component/activity-form/index.wxml-->
+
+<van-cell-group>
+    <view class="button-border" >图片上传</view>
+    <van-uploader>
+        <van-button class="button-border" icon="photo" size="large"></van-button>
+    </van-uploader>
+    <van-field
+    label="活动名称"
+    model:value="{{ name }}"
+    placeholder="请输入内容"
+    />
+    <van-field
+        label="活动简介"
+        model:value="{{ intruducation }}"
+        placeholder="请输入内容"
+        maxlength="100"
+        show-word-limit
+        
+    />
+    <van-field
+        label="活动地点"
+        model:value="{{ workplace }}"
+        placeholder="请输入内容"
+        right-icon="guide-o"
+        bind:click-icon="toPlace"
+    >
+    </van-field>
+    <van-cell
+        title="活动时间"
+        placeholder="请选择时间段"
+        bindtap="showDate"
+    />
+    <van-cell
+        title="活动限制人数"
+        model:value="{{ number }}"
+    >
+      <van-stepper value="{{ 1 }}" bind:change="onChangeNumber" />
+    </van-cell>
+</van-cell-group>
+    <van-popup
+    show="{{ idShowDate }}"
+    position="bottom"
+    bind:close="onCloseDate"
+    >
+        <van-datetime-picker
+            label="活动时间"
+            type="date"
+            title="时间选择"
+            value="{{ currentDate }}"
+            bind:input="onInput"
+            min-date="{{ minDate }}"
+            formatter="{{ formatter }}"
+        />
+     </van-popup>
+  
+

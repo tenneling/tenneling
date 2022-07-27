@@ -8,6 +8,5 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ReqPhone {
-    private String access_token;
     private String code;
 }

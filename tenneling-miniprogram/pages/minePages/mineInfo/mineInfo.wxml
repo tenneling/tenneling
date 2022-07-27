@@ -1,0 +1,89 @@
+<!--pages/minePages/mineInfo/mineInfo.wxml-->
+<view class="mine-container" style="padding:{{statusBarHeight}}px 0;margin-bottom: 100rpx;box-sizing: border-box;">
+    <view class="info-nav" style="height: {{navHeight}}px;">
+        <van-icon style="margin-left: 10rpx;color:#fff" name="arrow-left" bindtap="goBack" />
+    </view>
+
+    <view class="info-first">
+        <view class="info-list">
+            <text style="color: #fff;">头像</text>
+            <image class="user-img" src="{{Info.userImg}}"></image>
+        </view>
+        <view class="info-list">
+            <text style="color: #fff;">昵称</text>
+            <input style="color: #fff;" model:value="{{Info.nickName}}" placeholder="请输入昵称" placeholder-style="color:#9B9B9B;"></input>
+        </view>
+        <view class="info-list" style="border-bottom:0;">
+            <text style="color: #fff;">日期</text>
+            <view style="width: 100px;height: 31rpx;color: #fff;" bindtap="OpenDate">{{Info.birthDate}}</view>
+            <!-- <picker mode="date" value="{{Info.birthDate}}" start="1900-01-01" end="{{endDate}}" bindchange="changeDate">
+                <view style="color: #fff;" class="picker">{{Info.birthDate}}</view>
+            </picker> -->
+        </view>
+    </view>
+    <view class="info-first" style="margin-top: 20rpx;">
+        <view class="info-list">
+            <text style="color: #fff;">身高</text>
+            <view style="width: 100px;height: 31rpx;color: #fff;" bindtap="OpenHeight">{{Info.height}}</view>
+        </view>
+        <view class="info-list">
+            <text style="color: #fff;">体重</text>
+            <view style="width: 100px;height: 31rpx;color: #fff;" bindtap="OpenHeight">{{Info.weight}}</view>
+        </view>
+        <view class="info-list" style="border-bottom:0;">
+            <text style="color: #fff;">地区</text>
+            <picker mode="date" value="{{Info.region}}" start="1900-01-01" end="{{endDate}}" bindchange="changeDate">
+                <view style="color: #fff;" class="picker">{{Info.region}}</view>
+            </picker>
+        </view>
+    </view>
+
+</view>
+
+<!-- 日期选择器 -->
+<van-popup
+    show="{{ birthDateShow }}"
+    position="bottom"
+    bind:close="onCloseDate"
+>
+    <!-- <van-picker
+    show-toolbar
+    columns="{{ columns }}"
+    bind:cancel="onCancelDate"
+    bind:confirm="onConfirmDate" /> -->
+    <van-datetime-picker
+        label="活动时间"
+        type="date"
+        title="时间选择"
+        value="{{ maxDate }}"
+        min-date="{{ minDate }}"
+        max-date="{{ maxDate }}"
+        formatter="{{ formatter }}"
+        bind:cancel="onCancelDate"
+        bind:confirm="onConfirmDate"
+    />
+</van-popup>
+<!-- 身高选择器 -->
+<van-popup
+    show="{{ heightShow }}"
+    position="bottom"
+    bind:close="onCloseHeight"
+>
+    <van-picker
+    show-toolbar
+    columns="{{ columnsHeight }}"
+    bind:cancel="onCancelHeight"
+    bind:confirm="onConfirmHeight" />
+</van-popup>
+<!-- 体重选择器 -->
+<van-popup
+    show="{{ weightShow }}"
+    position="bottom"
+    bind:close="onCloseWeight"
+>
+    <van-picker
+    show-toolbar
+    columns="{{ columns }}"
+    bind:cancel="onCancelWeight"
+    bind:confirm="onConfirmWeight" />
+</van-popup>

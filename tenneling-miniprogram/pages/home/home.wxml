@@ -1,0 +1,2 @@
+<!--pages/home/home.wxml 首页-->
+<van-image class="image" width="320"  height="320" src="/image/index.png" />

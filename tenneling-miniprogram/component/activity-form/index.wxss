@@ -1,0 +1,4 @@
+/* component/activity-form/index.wxss */
+.button-border {
+    padding: 20px;
+}

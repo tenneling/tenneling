@@ -1,0 +1,14 @@
+/* pages/activity/activity.wxss */
+.tabs-view van-image {
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.tabs-view rich-text {
+   margin-left: 24px;
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
+}

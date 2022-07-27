@@ -8,10 +8,7 @@ import com.tenneling.dao.SysParaMapper;
 import com.tenneling.dao.WxUserMapper;
 import com.tenneling.entity.base.SysPara;
 import com.tenneling.entity.base.WxUser;
-import com.tenneling.entity.wechat.RawData;
-import com.tenneling.entity.wechat.ReqPhone;
-import com.tenneling.entity.wechat.ReqWxUser;
-import com.tenneling.entity.wechat.ResWxUser;
+import com.tenneling.entity.wechat.*;
 import com.tenneling.utils.WeChartUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,8 +72,6 @@ public class UserService {
         wxUser.setCity(rawData.getCity());
         wxUser.setCountry(rawData.getCountry());
         wxUser.setProvince(rawData.getProvince());
-        // 请求手机号
-        wxUser.setPhonenumber(this.getPhone(reqWxUser.getCode()));
         JSONObject encryptedData = WeChartUtils.getEncryptedData(reqWxUser.getEncryptedData(), resWxUser.getSession_key(), reqWxUser.getIv());
         if (encryptedData != null){
             String unionId = encryptedData.getString("unionId");
@@ -99,7 +94,8 @@ public class UserService {
         log.info("响应报文：[{}]", response.getBody());
         return JSONObject.parseObject(String.valueOf(response.getBody()),ResWxUser.class) ;
     }
-    private String getPhone(String codeId) throws JsonProcessingException {
+
+    public ResCommonBody getPhone(String codeId) throws JsonProcessingException {
         //从配置表获取accessToken
         SysPara sysPara = sysParaMapper.getByKey("ACCESS_TOKEN");
         log.info("sysPara:{},{}",sysPara,sysPara.getParaValue());
@@ -114,9 +110,13 @@ public class UserService {
         HttpEntity<JSONObject> request = new HttpEntity(reqPhone,headers);
         log.info("url:[{}],请求报文：[{}]", url.toString() , JSONObject.toJSONString(request));
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.postForEntity(phoneUrl,request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url.toString(),request, String.class);
         log.info("响应报文：[{}]", response.getBody());
-        return JSONObject.parseObject(String.valueOf(response.getBody()),String.class) ;
+        String phone = JSONObject.parseObject(String.valueOf(response.getBody()),String.class);
+        ResCommonBody resCommonBody = new ResCommonBody();
+        resCommonBody.setMsg("");
+        resCommonBody.setCode("");
+        return resCommonBody ;
     }
 
 }

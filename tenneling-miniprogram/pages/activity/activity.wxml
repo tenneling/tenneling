@@ -1,0 +1,44 @@
+<!--pages/activity/activity.wxml 活动-->
+    <van-search
+    value="{{ value }}"
+    shape="round"
+    background="#4fc08d"
+    bind:cancel="onCancel"
+    placeholder="搜索"
+    />
+        <van-tabs class="tabs-view" active="continue" bind:change="onChange">
+            <van-tab  title="报名中"  name="continue" >
+            <scroll-view  scroll-y="true" style="height: 850rpx;">
+                <view>
+                    <van-image  use-loading-slot use-error-slot width="320" height="120" src="/image/local/1.jpg" alt="查看详情" bindtap="toDetail" data-id='1'/>
+                    <rich-text nodes="<h3>活动标题</h3> <div>2022.02.20  10:00-19:00</div> <div>深圳市南山区粤海街道</div> <div>报名人数：10/20</div>"/>
+                </view>
+                <view>
+                    <van-image width="320" height="120" src="/image/local/2.jpg" />
+                    <rich-text nodes="<h3>活动标题</h3> <div>2022.02.20  10:00-19:00</div> <div>深圳市南山区粤海街道</div> <div>报名人数：10/20</div>"/>
+                </view>
+                <view>
+                    <van-image width="320"  height="120" src="/image/local/3.jpg" />
+                    <rich-text nodes="<h3>活动标题</h3> <div>2022.02.20  10:00-19:00</div> <div>深圳市南山区粤海街道</div> <div>报名人数：10/20</div>"/>
+                </view>
+            </scroll-view>
+                </van-tab>
+            <van-tab title="已结束"  name="over">
+                <scroll-view  scroll-y="true" style="height: 850rpx;">
+
+                <view>
+                    <van-image width="320" height="100" src="/image/local/4.jpg" />
+                    <rich-text nodes="<h3>活动标题</h3> <div>2022.02.20  10:00-19:00</div> <div>深圳市南山区粤海街道</div> <div>报名人数：10/20</div>"/>
+                </view>
+                <view>
+                    <van-image width="320" height="100" src="/image/local/5.jpg" />
+                    <rich-text nodes="<h3>活动标题</h3> <div>2022.02.20  10:00-19:00</div> <div>深圳市南山区粤海街道</div> <div>报名人数：10/20</div>"/>
+                </view>
+                <view>
+                    <van-image width="320"  height="100"src="/image/local/6.jpg" />
+                    <rich-text nodes="<h3>活动标题</h3> <div>2022.02.20  10:00-19:00</div> <div>深圳市南山区粤海街道</div> <div>报名人数：10/20</div>"/>
+                </view>
+                </scroll-view>
+            </van-tab>
+        </van-tabs>
+
