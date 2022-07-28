@@ -58,7 +58,3 @@
     align-items: center;
     justify-content: center;
   }
-
-.block>van-icon{
-    margin: 10px 0;
-}

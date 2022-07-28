@@ -43,13 +43,31 @@ public class UserService {
     @Value("${wechat.accessTokenUrl}")
     private String accessTokenUrl ;
 
-    public ResWxUser userLogin(ReqWxUser reqWxUser) throws JsonProcessingException {
+    public ResLogin userLogin(ReqLogin reqLogin) throws JsonProcessingException {
+        log.info("前端入参code：{}",reqLogin);
+        //请求小程序登录接口
+        ResLogin resLogin = this.requestLogin(reqLogin);
+        if(!(ResultDataEnum.APPID_MISSING.getCode()==(resLogin.getErrcode())||
+                ResultDataEnum.APPID_ERROR.getCode()==(resLogin.getErrcode())||
+                    ResultDataEnum.CODE_ERROR.getCode()==(resLogin.getErrcode()))){
+            //处理用户数据
+            WxUser wxUser = wxUserMapper.getWxUserByOpenId(resLogin.getOpenid());
+            if (wxUser == null){
+                wxUser = new WxUser();
+                wxUser.setOpenid(resLogin.getOpenid());
+                wxUserMapper.insert(wxUser);
+            }
+        }
+        return resLogin;
+    }
+
+    public ResWxUser saveUser(ReqWxUser reqWxUser) throws JsonProcessingException {
         log.info("前端入参：{}",reqWxUser);
         //请求小程序登录接口
-        ResWxUser resWxUser = this.requestLogin(reqWxUser);
+        ResWxUser resWxUser =new ResWxUser();
         if(!(ResultDataEnum.APPID_MISSING.getCode()==(resWxUser.getErrcode())||
                 ResultDataEnum.APPID_ERROR.getCode()==(resWxUser.getErrcode())||
-                    ResultDataEnum.CODE_ERROR.getCode()==(resWxUser.getErrcode()))){
+                ResultDataEnum.CODE_ERROR.getCode()==(resWxUser.getErrcode()))){
             //处理用户数据
             this.dealWithUser(reqWxUser,resWxUser);
             //放置token
@@ -81,18 +99,18 @@ public class UserService {
         wxUserMapper.updateByPrimaryKeySelective(wxUser);
     }
 
-    private ResWxUser requestLogin(ReqWxUser reqWxUser) throws JsonProcessingException {
+    private ResLogin requestLogin(ReqLogin reqLogin) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.clear();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        StringBuilder url = new StringBuilder(requestUrl).append("?appid=").append(appid).append("&secret=").append(secret).append("&js_code=").append(reqWxUser.getCode()).append("&grant_type=").append("authorization_code");
+        StringBuilder url = new StringBuilder(requestUrl).append("?appid=").append(appid).append("&secret=").append(secret).append("&js_code=").append(reqLogin.getCode()).append("&grant_type=").append("authorization_code");
         //请求接口
-        HttpEntity<JSONObject> request = new HttpEntity(reqWxUser,headers);
+        HttpEntity<JSONObject> request = new HttpEntity(reqLogin,headers);
         log.info("url:[{}],请求报文：[{}]", url , JSONObject.toJSONString(request));
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.postForEntity(url.toString() ,request, String.class);
         log.info("响应报文：[{}]", response.getBody());
-        return JSONObject.parseObject(String.valueOf(response.getBody()),ResWxUser.class) ;
+        return JSONObject.parseObject(String.valueOf(response.getBody()),ResLogin.class) ;
     }
 
     public ResCommonBody getPhone(String codeId) throws JsonProcessingException {

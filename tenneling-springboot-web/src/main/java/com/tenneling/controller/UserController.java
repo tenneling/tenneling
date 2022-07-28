@@ -1,9 +1,7 @@
 package com.tenneling.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.tenneling.entity.wechat.ReqWxUser;
-import com.tenneling.entity.wechat.ResCommonBody;
-import com.tenneling.entity.wechat.ResWxUser;
+import com.tenneling.entity.wechat.*;
 import com.tenneling.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,8 +20,17 @@ public class UserController {
     @ResponseBody
     @PostMapping(value = "/userLogin")
     @ApiOperation(value="用户登陆", notes="用户登陆", httpMethod = "POST")
-    public ResWxUser userLogin(@RequestBody ReqWxUser reqWxUser) throws JsonProcessingException {
-        ResWxUser resWxUser =  userService.userLogin(reqWxUser);
+    public ResLogin userLogin(@RequestBody ReqLogin reqLogin) throws JsonProcessingException {
+        ResLogin resLogin =  userService.userLogin(reqLogin);
+        log.info("返回前端：{}",resLogin);
+        return resLogin;
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/saveUser")
+    @ApiOperation(value="保存用户信息", notes="保存用户信息", httpMethod = "POST")
+    public ResWxUser saveUser(@RequestBody ReqWxUser reqWxUser) throws JsonProcessingException {
+        ResWxUser resWxUser =  userService.saveUser(reqWxUser);
         log.info("返回前端：{}",resWxUser);
         return resWxUser;
     }

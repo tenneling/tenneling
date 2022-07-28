@@ -32,6 +32,5 @@ public class WxUserTest {
         ReqWxUser reqWxUser = new ReqWxUser();
         reqWxUser.setEncryptedData("wewew");
         reqWxUser.setIv("23232");
-        userService.userLogin(reqWxUser);
     }
 }
