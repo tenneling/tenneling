@@ -8,13 +8,12 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ReqWxUser {
-
-    private String appid;
-    private String secret;
-    private String code;
-    private String grant_type;
-    private String iv;
-    private String rawData;
-    private String signature;
-    private String encryptedData;
+    private String openid;
+    private String nickName;
+    private String avatarUrl;
+    private String gender;
+    private String city;
+    private String country;
+    private String language;
+    private String province;
 }

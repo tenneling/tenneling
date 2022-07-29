@@ -2,7 +2,6 @@ package com.tenneling;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tenneling.dao.WxUserMapper;
-import com.tenneling.entity.wechat.ReqWxUser;
 import com.tenneling.entity.base.WxUser;
 import com.tenneling.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +28,5 @@ public class WxUserTest {
 
     @Test
     public void test02() throws JsonProcessingException {
-        ReqWxUser reqWxUser = new ReqWxUser();
-        reqWxUser.setEncryptedData("wewew");
-        reqWxUser.setIv("23232");
     }
 }

@@ -8,7 +8,7 @@
         <result column="openId" property="openid" jdbcType="VARCHAR" />
         <result column="nickName" property="nickname" jdbcType="VARCHAR" />
         <result column="gender" property="gender" jdbcType="VARCHAR" />
-        <result column="country" property="country" jdbcType="VARCHAR" />
+        <result column="language" property="language" jdbcType="VARCHAR" />
         <result column="city" property="city" jdbcType="VARCHAR" />
         <result column="province" property="province" jdbcType="VARCHAR" />
         <result column="avatarUrl" property="avatarurl" jdbcType="VARCHAR" />
@@ -25,13 +25,13 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, phoneNumber, openId, nickName, gender, country, city, province, avatarUrl, unionId,
-        watermark, rawData, cloudId, birthday, email, create_user, create_time, update_user, 
+        id, phoneNumber, openId, nickName, gender, language, city, province, avatarUrl, unionId,
+        watermark, rawData, cloudId, birthday, email, create_user, create_time, update_user,
         update_time
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        select 
+        select
         <include refid="Base_Column_List" />
         from wx_user
         where id = #{id,jdbcType=INTEGER}
@@ -43,20 +43,20 @@
     </delete>
 
     <insert id="insert" parameterType="com.tenneling.entity.base.WxUser" >
-        insert into wx_user (id, phoneNumber, openId, 
-            nickName, gender, country,
-            city, province, avatarUrl, 
-            unionId, watermark, rawData, 
-            cloudId, birthday, email, 
-            create_user, create_time, update_user, 
-            update_time)
-        values (#{id,jdbcType=INTEGER}, #{phonenumber,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
-            #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR},
-            #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
-            #{unionid,jdbcType=VARCHAR}, #{watermark,jdbcType=VARCHAR}, #{rawdata,jdbcType=VARCHAR}, 
-            #{cloudid,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{email,jdbcType=VARCHAR}, 
-            #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, 
-            #{updateTime,jdbcType=VARCHAR})
+        insert into wx_user (id, phoneNumber, openId,
+                             nickName, gender, language,
+                             city, province, avatarUrl,
+                             unionId, watermark, rawData,
+                             cloudId, birthday, email,
+                             create_user, create_time, update_user,
+                             update_time)
+        values (#{id,jdbcType=INTEGER}, #{phonenumber,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},
+                #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR},
+                #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR},
+                #{unionid,jdbcType=VARCHAR}, #{watermark,jdbcType=VARCHAR}, #{rawdata,jdbcType=VARCHAR},
+                #{cloudid,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{email,jdbcType=VARCHAR},
+                #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=VARCHAR})
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.WxUser" >
@@ -74,8 +74,8 @@
             <if test="gender != null" >
                 gender = #{gender,jdbcType=VARCHAR},
             </if>
-            <if test="country != null" >
-                country = #{country,jdbcType=VARCHAR},
+            <if test="language != null" >
+                language = #{language,jdbcType=VARCHAR},
             </if>
             <if test="city != null" >
                 city = #{city,jdbcType=VARCHAR},

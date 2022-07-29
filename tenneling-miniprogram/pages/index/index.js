@@ -8,19 +8,20 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
+    canIUseGetUserProfile: true,
+    canIUseOpenData: false
   },
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({
+      url: '../logs/logs'
     })
   },
   // 跳转到首页
-  ToIndexPage(){
+  ToIndexPage() {
     wx.switchTab({
       "url": "/pages/home/home"
-      })
+    })
   },
   onLoad() {
     if (wx.getUserProfile) {
@@ -30,24 +31,55 @@ Page({
     }
   },
   getUserProfile(e) {
+    console.log(e);
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log(res)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
+        console.log("--------------获取到的用户信息------------------");
+        console.log(res);
+        const openid = wx.getStorageSync('openid');
+        wx.request({
+          url: 'http://localhost:8080/saveUser', //测试api
+          method: 'post',
+          data: {
+            nickName : res.userInfo.nickName,
+            avatarUrl : res.userInfo.avatarUrl,
+            gender : res.userInfo.gender,
+            city : res.userInfo.city,
+            country : res.userInfo.country,
+            language : res.userInfo.language,
+            province : res.userInfo.province,
+            openid: openid
+          },
+          header: {
+            'content-type': 'application/json', //请求头
+          },
+          success: function (result) {
+            console.log(result);
+            console.log('----------成功保存用户信息----------');
+          },
+          fail: ui => {
+            console.log("-------------------保存用户信息失败--------------------");
+          }
+        }
+        )
+      },
+      fail: res => {
+        console.log("-------------------授权失败--------------------");
+        console.log(res)
+        //拒绝授权
+        wx.showToast({
+          title: '您拒绝了请求,不能正常使用小程序',
+          icon: 'error',
+          duration: 2000
+        });
+        return;
       }
-    })
-  },
-  getUserInfo(e) {
-    // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
-    console.log(e)
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
     })
   }
 })

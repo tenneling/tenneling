@@ -58,6 +58,8 @@ public class UserService {
                 wxUserMapper.insert(wxUser);
             }
         }
+        //放置token
+        resLogin.setToken(WeChartUtils.getToken(resLogin.getOpenid()));
         return resLogin;
     }
 
@@ -77,24 +79,19 @@ public class UserService {
     }
 
     private void dealWithUser(ReqWxUser reqWxUser, ResWxUser resWxUser) throws JsonProcessingException {
-        WxUser wxUser = wxUserMapper.getWxUserByOpenId(resWxUser.getOpenid());
-        if (wxUser == null){
-            wxUser = new WxUser();
-            wxUser.setOpenid(resWxUser.getOpenid());
-            wxUserMapper.insert(wxUser);
-        }
-        RawData rawData = JSON.parseObject(reqWxUser.getRawData(), RawData.class);
-        wxUser.setNickname(rawData.getNickName());
-        wxUser.setAvatarurl(rawData.getAvatarUrl());
-        wxUser.setGender(rawData.getGender());
-        wxUser.setCity(rawData.getCity());
-        wxUser.setCountry(rawData.getCountry());
-        wxUser.setProvince(rawData.getProvince());
-        JSONObject encryptedData = WeChartUtils.getEncryptedData(reqWxUser.getEncryptedData(), resWxUser.getSession_key(), reqWxUser.getIv());
+        WxUser wxUser = wxUserMapper.getWxUserByOpenId(reqWxUser.getOpenid());
+        wxUser.setNickname(reqWxUser.getNickName());
+        wxUser.setAvatarurl(reqWxUser.getAvatarUrl());
+        wxUser.setGender(reqWxUser.getGender());
+        wxUser.setCity(reqWxUser.getCity());
+        wxUser.setCountry(reqWxUser.getCountry());
+        wxUser.setProvince(reqWxUser.getProvince());
+        wxUser.setLanguage(reqWxUser.getLanguage());
+        /*JSONObject encryptedData = WeChartUtils.getEncryptedData(reqWxUser.getEncryptedData(), resWxUser.getSession_key(), reqWxUser.getIv());
         if (encryptedData != null){
             String unionId = encryptedData.getString("unionId");
             wxUser.setUnionid(unionId);
-        }
+        }*/
         log.info("用户登录信息：{}",wxUser);
         wxUserMapper.updateByPrimaryKeySelective(wxUser);
     }

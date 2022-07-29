@@ -80,6 +80,9 @@ public class WxUser implements Serializable {
      */
     private String email;
 
+
+    private String language;
+
     /**
      * 创建人
      */

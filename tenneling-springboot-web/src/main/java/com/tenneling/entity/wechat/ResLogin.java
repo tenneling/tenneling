@@ -12,4 +12,5 @@ public class ResLogin {
     private String errmsg;
     private String session_key;
     private String openid;
+    private String token;
 }
