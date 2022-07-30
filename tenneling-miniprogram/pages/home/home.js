@@ -118,25 +118,6 @@ Page({
       curFinish: e.detail.value
     })
   },
-  //修改备忘录
-  toChange(e) {
-    let i = e.target.dataset.id;
-    this.setData({
-      lists: editArr(this.data.lists, i, { editing: true })
-    })
-  },
-  iptEdit(e) {
-    let i = e.target.dataset.id;
-    this.setData({
-      lists: editArr(this.data.lists, i, { curVal: e.detail.value })
-    })
-  },
-  saveEdit(e) {
-    let i = e.target.dataset.id;
-    this.setData({
-      lists: editArr(this.data.lists, i, { content: this.data.lists[i].curVal, editing: false })
-    })
-  },
   setDone(e) {
     let i = e.target.dataset.id;
     var that = this;
@@ -161,7 +142,6 @@ Page({
   toDelete(e) {
     let i = e.target.dataset.id;
     const that = this
-
     wx.request({
       url: 'http://192.168.0.112:8080/deleteToDoList', 
       method: 'POST',
@@ -201,13 +181,6 @@ Page({
           showAll: false
         })
       }
-    })
-  },
-  saveData() {
-    let listsArr = this.data.lists;
-    wx.setStorage({
-      key: 'todolist',
-      data: listsArr
     })
   }
 })
