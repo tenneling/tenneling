@@ -7,7 +7,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class ResCommonBody {
-    private int code;
-    private String msg;
+public class ReqDoList {
+    private Integer id;
+    private String openid;
+    private String status;
 }

@@ -10,7 +10,9 @@ public enum  ResultDataEnum {
     FAIL(500,"失败"),
     APPID_MISSING(41002,"appid missing"),
     APPID_ERROR(40013,"invalid appid"),
-    CODE_ERROR(40029,"invalid code");
+    CODE_ERROR(40029,"invalid code"),
+    SUCCESS(200,"成功");
+
 
 
 

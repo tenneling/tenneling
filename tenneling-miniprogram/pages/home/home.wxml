@@ -26,33 +26,22 @@
   </view>
   </form>
   <view class="list-wrap" wx:if="{{lists.length>0}}">
-    <view wx:for="{{lists}}" wx:if="{{showAll ||(!showAll && !item.status)}}" id="{{item.id}}" class="{{item.status?'done list':'list'}}">        
+    <view wx:for="{{lists}}" wx:if="{{showAll}}" id="{{item.id}}" class="list">        
         <text>{{index+1}}:</text>
         <text data-id ="{{index}}"  class="cnt" bindtap="toChange" >{{item.content}}</text>
-        <view hidden="{{!item.status}}" class="edit-wrap">
-            <input class="ipt-edit" value="{{item.content}}"  data-id="{{index}}" bindinput='iptEdit' />
-            <button class="btn btn-edit" data-id="{{index}}" bindtap="saveEdit">修改</button>
-        </view>
         <text class="time"> {{item.startTime}}-{{item.endTime}}</text>
-        <icon class="ico-done" bindtap="setDone" data-id="{{index}}" type="success_no_circle" size='18' color="{{item.status?'#d7d7d7':'#6fa6cf'}}" />
-        <icon class="ico-delete" bindtap="toDelete" data-id="{{index}}" type='cancel' size='20' color="#6fa6cf" />
+        <icon class="ico-done" bindtap="setDone" data-id="{{index+1}}" type="success_no_circle" size='18' color="#d7d7d7"/>
+        <icon class="ico-delete" bindtap="toDelete" data-id="{{index+1}}" type='cancel' size='20' color="#6fa6cf" />
     </view>
     <view class="footer">
         <view class="ft-area">
             <text>{{lists.length}}条</text>
         </view>
          <view class="ft-area ft-mid">
-            <text wx:if="{{showAll}}" bindtap="showUnfinished" class="ft-action">显示未完成</text>
-            <text wx:else bindtap="showAll" class="ft-action">显示全部</text>
-        </view>
-        <view class="ft-area">
-            <text bindtap="doneAll" class="ft-action">全部完成</text>
-            <text bindtap="deleteAll" class="ft-action">全删</text>
+            <text wx:if="{{showAll}}" bindtap="showUnfinished" class="ft-action">显示全部</text>
+            <text wx:else bindtap="showAll" class="ft-action">显示未完成</text>
         </view>
     </view>
-  </view>
-  <view class="input-wrap mt" wx:if="{{lists.length>0}}">
-    <button class="btn btn-save" bindtap="saveData">保存数据</button>
   </view>
 </view>
  

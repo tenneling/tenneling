@@ -21,6 +21,7 @@ Page({
     curFinish: 1,
     remind: [],
     isAlert: '',
+    openid: wx.getStorageSync('openid')
   },
   //事件处理函数
   bindViewTap: function () {
@@ -29,27 +30,8 @@ Page({
     })
   },
   onLoad: function () {
-    var that = this;
-    const openid = wx.getStorageSync('openid');
-    // 加载列表数据
-    wx.request({
-      url: 'http://localhost:8080/getToDoList', //测试api
-      method: 'GET',
-      data: {
-        openid:openid
-      },
-      header: {
-        'content-type': 'application/json', //请求头
-      },
-      success: function (result) {
-        console.log(result);
-        if (result.data) {
-          that.setData({
-            lists: res.data
-          })
-        }
-      }
-    })
+    this.listdata();
+    console.log("----------------");
   },
   //可供选择的时间数组和已输入文本
   iptChange(e) {
@@ -59,8 +41,30 @@ Page({
       curRange: timeArr
     })
   },
+  //加载列表数据
+ async listdata(){
+     // 加载列表数据
+     wx.request({
+      url: 'http://localhost:8080/getToDoList', //测试api
+      method: 'GET',
+      data: {
+        openid: this.data.openid
+      },
+      header: {
+        'content-type': 'application/json', //请求头
+      },
+      success: function (result) {
+        console.log(result.data);
+        this.setData({
+          lists: result.data
+        })
+      }
+    })
+    console.log("1111111111111111111");
+    console.log(this.data.lists);
+  },
   //是否提醒
-  switchInfo(e){
+  switchInfo(e) {
     this.setData({
       isAlert: e.detail.value
     })
@@ -73,16 +77,28 @@ Page({
     })
   },
   formSubmit() {
-    let cnt = this.data.curIpt, 
-    newLists = this.data.lists, 
-    i = newLists.length, 
-    begin = this.data.curRange[this.data.curBegin], 
-    finish = this.data.curRange[this.data.curFinish];
+    let cnt = this.data.curIpt,
+      begin = this.data.curRange[this.data.curBegin],
+      finish = this.data.curRange[this.data.curFinish];
+      console.log(cnt);
     if (cnt) {
-      newLists.push({ id: i, content: cnt, done: false, beginTime: begin, finishTime: finish, editing: false });
-      this.setData({
-        lists: newLists,
-        curIpt: ''
+      wx.request({
+        url: 'http://localhost:8080/insertToDoList', //测试api
+        method: 'POST',
+        data: {
+          content: cnt,
+          startTime: begin,
+          endTime: finish,
+          openid: this.data.openid,
+          isAlert: this.data.isAlert,
+          status: 'false'
+        },
+        header: {
+          'content-type': 'application/json', //请求头
+        },
+        success: function (result) {
+          this.listdata();
+        }
       })
     }
   },
@@ -117,9 +133,31 @@ Page({
     })
   },
   setDone(e) {
-    let i = e.target.dataset.id, originalDone = this.data.lists[i].done;
-    this.setData({
-      lists: editArr(this.data.lists, i, { done: !originalDone })
+    let i = e.target.dataset.id;
+    var that = this;
+    wx.request({
+      url: 'http://localhost:8080/updateToDoStatus', //测试api
+      method: 'POST',
+      data: {
+        openid: that.data.openid,
+        id: i,
+        status: 'true'
+      },
+      header: {
+        'content-type': 'application/json', //请求头
+      },
+      success: function (result) {
+        console.log(result.data);
+        if (result.data.length == 0) {
+          that.setData({
+            lists: ''
+          })
+        } else {
+          that.setData({
+            lists: result.data
+          })
+        }
+      }
     })
   },
   toDelete(e) {

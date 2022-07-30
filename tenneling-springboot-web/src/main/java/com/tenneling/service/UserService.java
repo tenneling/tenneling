@@ -129,8 +129,8 @@ public class UserService {
         log.info("响应报文：[{}]", response.getBody());
         String phone = JSONObject.parseObject(String.valueOf(response.getBody()),String.class);
         ResCommonBody resCommonBody = new ResCommonBody();
-        resCommonBody.setMsg("");
-        resCommonBody.setCode("");
+        resCommonBody.setMsg(ResultDataEnum.SUCCESS.getMsg());
+        resCommonBody.setCode(ResultDataEnum.SUCCESS.getCode());
         return resCommonBody ;
     }
 
