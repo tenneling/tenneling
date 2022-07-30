@@ -17,7 +17,6 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if (res.code) {
-          console.log(res.code);
           wx.request({
             url: 'http://localhost:8080/userLogin', //测试api
             method: 'post',
@@ -28,13 +27,11 @@ App({
               'content-type': 'application/json', //请求头
             },
             success: function (result) {
-              console.log(result);
               //将token保存在全局变量中
               wx.setStorageSync('sessionid', result.data.token);
               wx.setStorageSync('openid', result.data.openid);
               console.log('-----------------成功登录-------------------');
             }
-
           }
           )
         }

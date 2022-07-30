@@ -17,7 +17,7 @@
                     结束时间：{{curRange[curFinish]}}
                 </text>
             </picker>  
-            <label class="time"><switch class="switch" checked bindchange="switchInfo" />提醒</label>
+            <label class="time"><switch class="switch" bindchange="switchInfo" />提醒</label>
         </view>
         <view class="flex-row" wx:if="{{curIpt}}">        
           <button class="btn btn-submit" formType="submit" hover-class="btn-hover">提交</button>
@@ -26,11 +26,11 @@
   </view>
   </form>
   <view class="list-wrap" wx:if="{{lists.length>0}}">
-    <view wx:for="{{lists}}" wx:if="{{showAll}}" id="{{item.id}}" class="list">        
+    <view wx:for="{{lists}}" id="{{item.id}}" class="list">        
         <text>{{index+1}}:</text>
-        <text data-id ="{{index}}"  class="cnt" bindtap="toChange" >{{item.content}}</text>
+        <text data-id ="{{item.id}}"  class="cnt" bindtap="toChange" >{{item.content}}</text>
         <text class="time"> {{item.startTime}}-{{item.endTime}}</text>
-        <icon class="ico-done" bindtap="setDone" data-id="{{item.id}}" type="success_no_circle" size='18' color="#d7d7d7"/>
+        <icon class="ico-done" bindtap="setDone" data-id="{{item.id}}" type="success_no_circle" size='18' color="{{item.status==='I'?'#d7d7d7':'#6fa6cf'}}"/>
         <icon class="ico-delete" bindtap="toDelete" data-id="{{item.id}}" type='cancel' size='20' color="#6fa6cf" />
     </view>
     <view class="footer">
@@ -38,8 +38,8 @@
             <text>{{lists.length}}条</text>
         </view>
          <view class="ft-area ft-mid">
-            <text wx:if="{{showAll}}" bindtap="showUnfinished" class="ft-action">显示全部</text>
-            <text wx:else bindtap="showAll" class="ft-action">显示未完成</text>
+            <text wx:if="{{showAll}}" bindtap="showAll" class="ft-action">显示全部</text>
+            <text wx:else bindtap="showUnfinished" class="ft-action">显示未完成</text>
         </view>
     </view>
   </view>

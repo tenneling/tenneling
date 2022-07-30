@@ -1,6 +1,7 @@
 package com.tenneling.dao;
 
 import com.tenneling.entity.base.ToDoList;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface ToDoListMapper {
 
     int updateByPrimaryKeySelective(ToDoList record);
 
-    List<ToDoList> selectByUserId(String openId);
+    List<ToDoList> selectByUserId(@Param("openid")String openId, @Param("status")String status);
 }

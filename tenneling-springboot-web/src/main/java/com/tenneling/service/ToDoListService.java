@@ -5,6 +5,7 @@ import com.tenneling.dao.ToDoListMapper;
 import com.tenneling.entity.base.ToDoList;
 import com.tenneling.entity.wechat.ResCommonBody;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +18,21 @@ public class ToDoListService {
     @Autowired
     private ToDoListMapper toDoListMapper;
 
-    public List<ToDoList> selectByUserId(String openid) {
-        List<ToDoList> doLists = toDoListMapper.selectByUserId(openid);
+    public List<ToDoList> selectByUserId(@Param("openid") String openid, @Param("status")String status) {
+        List<ToDoList> doLists = toDoListMapper.selectByUserId(openid,status);
         log.info("dolists:{}",doLists);
         return doLists;
     }
 
-    public List<ToDoList> updateToDoStatus(Integer id,String openid,String status) {
+    public ResCommonBody updateToDoStatus(Integer id,String openid,String status) {
         ToDoList toDoList = toDoListMapper.selectByPrimaryKey(id);
         toDoList.setStatus(status);
         toDoListMapper.updateByPrimaryKeySelective(toDoList);
-        List<ToDoList> doLists = toDoListMapper.selectByUserId(openid);
-        log.info("待完成的dolists:{}",doLists);
-        return doLists;
+
+        ResCommonBody resCommonBody = new ResCommonBody();
+        resCommonBody.setCode(ResultDataEnum.SUCCESS.getCode());
+        resCommonBody.setMsg(ResultDataEnum.SUCCESS.getMsg());
+        return resCommonBody;
     }
 
     public ResCommonBody insertToDoList(ToDoList toDoList) {

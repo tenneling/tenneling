@@ -31,7 +31,10 @@
         select
         <include refid="Base_Column_List" />
         from to_do_list
-        where openId = #{openid,jdbcType=VARCHAR} and status ='false'
+        where openId = #{openid,jdbcType=VARCHAR}
+        <if test="status != null" >
+            and status =#{status,jdbcType=VARCHAR}
+        </if>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

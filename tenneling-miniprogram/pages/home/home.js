@@ -20,7 +20,7 @@ Page({
     curBegin: 0,
     curFinish: 1,
     remind: [],
-    isAlert: '',
+    isAlert: false,
     openid: wx.getStorageSync('openid')
   },
   //事件处理函数
@@ -42,27 +42,32 @@ Page({
   },
   //加载列表数据
  async listdata(){
-
   const  that = this
      // 加载列表数据
      wx.request({
       url: 'http://192.168.0.112:8080/getToDoList', //测试api
       method: 'GET',
       data: {
-        openid: that.data.openid
+        openid: that.data.openid,
+        status : 'A'
       },
       header: {
         'content-type': 'application/json', //请求头
       },
       success: function (result) {
         that.setData({
-          lists: result.data
+          lists: result.data,
+          showAll:true,
+          curIpt: '',
+          curRange: [],
         })
       }
     })
   },
   //是否提醒
   switchInfo(e) {
+    console.log(e);
+    console.log(e.detail.value);
     this.setData({
       isAlert: e.detail.value
     })
@@ -89,13 +94,15 @@ Page({
           endTime: finish,
           openid: that.data.openid,
           isAlert: that.data.isAlert,
-          status: 'false'
+          status: 'A'
         },
         header: {
           'content-type': 'application/json', //请求头
         },
         success: function (result) {
-          that.listdata();
+          if(result.code = 200){
+            that.listdata();
+          }
         }
       })
     }
@@ -139,20 +146,14 @@ Page({
       data: {
         openid: that.data.openid,
         id: i,
-        status: 'true'
+        status: 'I'
       },
       header: {
         'content-type': 'application/json', //请求头
       },
       success: function (result) {
-        if (result.data.length == 0) {
-          that.setData({
-            lists: ''
-          })
-        } else {
-          that.setData({
-            lists: result.data
-          })
+        if(result.code = 200){
+          that.listdata();
         }
       }
     })
@@ -177,30 +178,29 @@ Page({
       }
     })
   },
-  doneAll() {
-    let newLists = this.data.lists;
-    newLists.map(function (l) {
-      l.done = true;
-    })
-    this.setData({
-      lists: newLists
-    })
-  },
-  deleteAll() {
-    this.setData({
-      lists: [],
-      remind: []
-    })
-  },
   showUnfinished() {
-    this.setData({
-      showAll: false
-    })
+    const that = this;
+    that.listdata();
   },
   showAll() {
     //显示全部事项
-    this.setData({
-      showAll: true
+    const  that = this
+     // 加载列表数据
+     wx.request({
+      url: 'http://localhost:8080/getToDoList', //测试api
+      method: 'GET',
+      data: {
+        openid: that.data.openid
+      },
+      header: {
+        'content-type': 'application/json', //请求头
+      },
+      success: function (result) {
+        that.setData({
+          lists: result.data,
+          showAll: false
+        })
+      }
     })
   },
   saveData() {
@@ -210,5 +210,4 @@ Page({
       data: listsArr
     })
   }
-
 })

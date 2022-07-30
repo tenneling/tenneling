@@ -22,15 +22,15 @@ public class ToDoListController {
     @ResponseBody
     @GetMapping(value = "/getToDoList")
     @ApiOperation(value="获取待办列表", notes="获取待办列表", httpMethod = "GET")
-    public List<ToDoList> getToDoList(String openid){
-        log.info("入参userId：{}",openid);
-        return toDoListService.selectByUserId(openid);
+    public List<ToDoList> getToDoList(String openid,String status){
+        log.info("入参userId：{},status :{}",openid,status);
+        return toDoListService.selectByUserId(openid,status);
     }
 
     @ResponseBody
     @PostMapping(value = "/updateToDoStatus")
     @ApiOperation(value="更新待办列表", notes="更新待办列表", httpMethod = "POST")
-    public List<ToDoList> updateToDoStatus(@RequestBody ReqDoList reqDoList){
+    public ResCommonBody updateToDoStatus(@RequestBody ReqDoList reqDoList){
         log.info("更新待办列表：{}",reqDoList);
         return toDoListService.updateToDoStatus(reqDoList.getId(),reqDoList.getOpenid(),reqDoList.getStatus());
     }
