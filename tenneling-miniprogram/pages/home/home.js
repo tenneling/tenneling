@@ -31,7 +31,6 @@ Page({
   },
   onLoad: function () {
     this.listdata();
-    console.log("----------------");
   },
   //可供选择的时间数组和已输入文本
   iptChange(e) {
@@ -43,25 +42,24 @@ Page({
   },
   //加载列表数据
  async listdata(){
+
+  const  that = this
      // 加载列表数据
      wx.request({
-      url: 'http://localhost:8080/getToDoList', //测试api
+      url: 'http://192.168.0.112:8080/getToDoList', //测试api
       method: 'GET',
       data: {
-        openid: this.data.openid
+        openid: that.data.openid
       },
       header: {
         'content-type': 'application/json', //请求头
       },
       success: function (result) {
-        console.log(result.data);
-        this.setData({
+        that.setData({
           lists: result.data
         })
       }
     })
-    console.log("1111111111111111111");
-    console.log(this.data.lists);
   },
   //是否提醒
   switchInfo(e) {
@@ -77,27 +75,27 @@ Page({
     })
   },
   formSubmit() {
+    const  that = this
     let cnt = this.data.curIpt,
       begin = this.data.curRange[this.data.curBegin],
       finish = this.data.curRange[this.data.curFinish];
-      console.log(cnt);
     if (cnt) {
       wx.request({
-        url: 'http://localhost:8080/insertToDoList', //测试api
+        url: 'http://192.168.0.112:8080/insertToDoList', //测试api
         method: 'POST',
         data: {
           content: cnt,
           startTime: begin,
           endTime: finish,
-          openid: this.data.openid,
-          isAlert: this.data.isAlert,
+          openid: that.data.openid,
+          isAlert: that.data.isAlert,
           status: 'false'
         },
         header: {
           'content-type': 'application/json', //请求头
         },
         success: function (result) {
-          this.listdata();
+          that.listdata();
         }
       })
     }
@@ -136,7 +134,7 @@ Page({
     let i = e.target.dataset.id;
     var that = this;
     wx.request({
-      url: 'http://localhost:8080/updateToDoStatus', //测试api
+      url: 'http://192.168.0.112:8080/updateToDoStatus', //测试api
       method: 'POST',
       data: {
         openid: that.data.openid,
@@ -147,7 +145,6 @@ Page({
         'content-type': 'application/json', //请求头
       },
       success: function (result) {
-        console.log(result.data);
         if (result.data.length == 0) {
           that.setData({
             lists: ''
@@ -161,14 +158,23 @@ Page({
     })
   },
   toDelete(e) {
-    let i = e.target.dataset.id, newLists = this.data.lists;
-    newLists.map(function (l, index) {
-      if (l.id == i) {
-        newLists.splice(index, 1);
+    let i = e.target.dataset.id;
+    const that = this
+
+    wx.request({
+      url: 'http://192.168.0.112:8080/deleteToDoList', 
+      method: 'POST',
+      data: {
+        id: i
+      },
+      header: {
+        'content-type': 'application/json', //请求头
+      },
+      success: function (result) {
+        if(result.code = 200){
+          that.listdata()
+        }
       }
-    })
-    this.setData({
-      lists: newLists
     })
   },
   doneAll() {

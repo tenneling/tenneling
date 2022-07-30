@@ -1,85 +1,83 @@
-/* pages/discover/discover.wxss */
-.calendar-container{
+.topBar{
   position: relative;
-  height: 100%;
-  padding: 10px;
-}
-.loading{
-  position: absolute;
-  left:50%;
-  top:50%;
-  width:120rpx;
-  height:120rpx;
-  margin-left: -60rpx;
-  margin-top: -60rpx;
-}
-.container-inner{
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  margin-bottom: 10px;
-  border:1px solid #333;
-  opacity:0;
-}
-.inner-date{
-  flex-grow: 1;
-  padding: 15px;
-  border-bottom:1px solid #333;
-}
-.date-year-month{
-  padding: 5px;
-  text-align: center;
-}
-.date-year-month text{
-  border-bottom:1px solid #333;
-}
-.year-month{
-  padding-right:15px;
-}
-.date-day{
-  text-align: center;
-  font-size: 180px;
-  font-family: 'Times New Roman', Times, serif;
-  font-weight: 600;
-  letter-spacing: -5px;
-}
-.date-show-year{
-  color:#777;
-  text-align: center;
-}
-.date-directors{
-  text-align: center;
-  color:#AAA;
-  font-size: 12px;
-}
-.date-directors text:last-child text{
-  display:none;
-}
-.inner-comment{
+  background-color: #8D91FF;
   width: 100%;
-  padding: 10px;
-  font-style: italic;
-  color: #666;
+  color: white;
+  font-family: '微软雅黑';
+  font-weight: 200;
 }
-.inner-comment text{
-  font-size: 30px;
-  color:#888;
+.topBar .whichDate{
+  display: inline-block;
+  padding: 0px 0rpx 10rpx 20rpx;
+  font-size: 70rpx;
 }
-.inner-movie{
-display: -webkit-flex;
-display: flex;
-padding: 10px;
-}
-.movie-average{
-  font-size:40px;
-  line-height:40px;
-  letter-spacing: -5px;
-  margin-right: 10px;
-}
-.star{
-  width:16px;
-  height:16px;
-  margin: 2px;
+.topBar .whichYear{
+  display: inline-block;
   vertical-align: top;
+  padding-top: 15rpx;
+  font-size: 28rpx;
 }
+.topBar .nongliDetail{
+  position: absolute;
+  right: 10rpx;
+  bottom: 10rpx;
+}
+.monthBox{
+  width: 96%;
+  padding: 0 2%;
+}
+.weekDay{
+  display: flex;
+  flex-grow: 1;
+}
+.weekDay .week{
+  display: flex;
+  width: 200rpx;
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+  justify-content: center;
+  font-family:'微软雅黑';
+  font-weight: 200;
+}
+.monthDay{
+  width: 100%;
+}
+.monthDay .tr{
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+}
+.monthDay .tr .day{
+  display: block;
+  width: 200rpx;
+  height: 80rpx;
+  padding-top: 10rpx;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5rpx;
+  text-align: center;
+  color: #999;
+  border: 1rpx solid white;
+}
+.monthDay .tr .day.hideDayInfo{
+  border: 1rpx solid white;
+}
+.monthDay .tr .day.showDayInfo{
+  border:1rpx solid #8D91FF;
+}
+.monthDay .tr .today{
+  background-color: #8D91FF;
+  color:white;
+}
+.monthDay .tr .day .gongli{
+  display: block;
+  font-family:Arial, Helvetica, sans-serif;
+}
+.monthDay .tr .day .nongli{
+  display: block;
+  font-family: "微软雅黑";
+  font-weight: 200;
+  font-size: 20rpx;
+  text-align: center;
+}
+

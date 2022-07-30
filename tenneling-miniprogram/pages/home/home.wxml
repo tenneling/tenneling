@@ -30,8 +30,8 @@
         <text>{{index+1}}:</text>
         <text data-id ="{{index}}"  class="cnt" bindtap="toChange" >{{item.content}}</text>
         <text class="time"> {{item.startTime}}-{{item.endTime}}</text>
-        <icon class="ico-done" bindtap="setDone" data-id="{{index+1}}" type="success_no_circle" size='18' color="#d7d7d7"/>
-        <icon class="ico-delete" bindtap="toDelete" data-id="{{index+1}}" type='cancel' size='20' color="#6fa6cf" />
+        <icon class="ico-done" bindtap="setDone" data-id="{{item.id}}" type="success_no_circle" size='18' color="#d7d7d7"/>
+        <icon class="ico-delete" bindtap="toDelete" data-id="{{item.id}}" type='cancel' size='20' color="#6fa6cf" />
     </view>
     <view class="footer">
         <view class="ft-area">

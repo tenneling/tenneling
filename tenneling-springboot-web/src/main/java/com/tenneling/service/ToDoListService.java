@@ -39,4 +39,12 @@ public class ToDoListService {
         resCommonBody.setMsg(ResultDataEnum.SUCCESS.getMsg());
         return resCommonBody;
     }
+
+    public ResCommonBody deleteToDoList(ToDoList toDoList) {
+        toDoListMapper.deleteByPrimaryKey(toDoList.getId());
+        ResCommonBody resCommonBody = new ResCommonBody();
+        resCommonBody.setCode(ResultDataEnum.SUCCESS.getCode());
+        resCommonBody.setMsg(ResultDataEnum.SUCCESS.getMsg());
+        return resCommonBody;
+    }
 }

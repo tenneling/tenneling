@@ -1,133 +1,128 @@
-// pages/discover/discover.js
-//index.js
-//获取应用实例
-var app = getApp()
+var d = require('date.js')
+var CN_Date = require('getCNDate.js');
+var t = new Date();
+
 Page({
-  data: {
-    "year":0,
-    "month":0,
-    "day":0,
-    "week":0,
-    "show_year":0,
-    "comment":'',
-    "directors":'',
-    "title":'',
-    "average":'',
-    "stars":'',
-    "loading_opacity": 1,
-    "animationData":''
-  },
-  //页面初次渲染完成
-  onReady: function (e) {
-    this.showDate();
-    var _this = this,todayDate = this.data.year+''+this.data.month+''+this.data.day;
-    wx.getStorage({
-      key: 'movie',
-      success: function(res) {
-        // console.log(res.data)
-        if(res.data.date==todayDate){
-          _this.setData(res.data.movieData);
-          _this.loading();
-        }else{
-          _this.loadMovie();
+    data:{
+        monthNum:t.getMonth() + 1,
+        yearNum:t.getFullYear(),
+        MonthDayArray:[],
+        toDate:t.getDate(),
+        toMonth:t.getMonth() + 1,
+        toYear:t.getFullYear(),
+        fromToday:'今天',
+        nongliDetail:CN_Date(t.getFullYear(), t.getMonth() + 1, t.getDate()),
+    },
+    
+    onShow:function(){
+        console.log('onShow');
+        this.calcMonthDayArray();
+    },
+
+    dateClick:function(e){
+        var eId = e.currentTarget.id;
+        var MonArray = this.data.MonthDayArray;
+        var data = this.data;
+        if(eId == "")return;
+        //点击效果 ，且只能选中一个日期
+        //FIX 这个遍历算法可以改进
+        for(var i = 0;i < MonArray.length;i++){
+            for(var j = 0;j < MonArray[i].length;j++){
+                if(typeof(MonArray[i][j]) == 'string'){
+                    continue;
+                }
+                if(MonArray[i][j].num == eId){  
+                    MonArray[i][j].isShowDayInfo = !MonArray[i][j].isShowDayInfo;
+                }
+            }
         }
-      },
-      fail: function() {
-        _this.loadMovie();
-      }
-    })
-  },
-  // 页面初始化
-  onLoad:function(options){},
-  //显示日期，年月日
-  showDate:function(){
-    var today = new Date(),_this = this,year = today.getFullYear()+'',i = 0,chineseYear='',week = today.getDay();
-    //将年份转换为中文
-    do{
-      chineseYear = chineseYear+app.chineseDate.years[year.charAt(i)]
-      i++;
-    }while(i<year.length)
-    //设置数据
-    _this.setData({
-       "year":chineseYear,
-       "month":app.chineseDate.months[today.getMonth()],
-       "day":today.getDate(),
-       "week":app.chineseDate.years[week] 
-     })
-  },
-  //加载top250电影信息
-  loadMovie: function(){
-    var _this = this,
-        //请求发送的数据，随机的起始值和条数（只需要一条）
-        reqData = {
-          start:Math.floor(Math.random()*250),
-          count:1
-        };
-    //发送请求，获取电影数据
-    wx.request({
-      url:"http://localhost:5000",
-      data:reqData,
-      header:{
-        'Content-Type':'application/json'
-      },
-      success:function(res){
-        var movieData = res.data.subjects[0];
-        // console.log(movieData);
-        //设置数据，评分是整数需要补上小数点和0
-        var now = new Date(),thisYear = now.getFullYear();
-        var average = movieData.rating.average%1 === 0?movieData.rating.average+'.0':movieData.rating.average;
-        var date = _this.data.year+''+_this.data.month+''+_this.data.day,
-            renderData = {
-              "show_year":thisYear-movieData.year,
-              "comment":movieData.comment,
-              "directors":movieData.directors,
-              "title":movieData.title,
-              "average":average,
-              "stars":_this.starCount(movieData.rating.stars),
-              "loading_opacity": 0
-            };
-        _this.setData(renderData);
-        _this.storeData(date,renderData);
-        _this.loading();
-      }
-    });
-  },
-  //计算行星显示规则
-  starCount:function(originStars){
-    //计算星星显示需要的数据，用数组stars存储五个值，分别对应每个位置的星星是全星、半星还是空星
-    var starNum = originStars/10,stars = [],i = 0;
-    do{
-      if(starNum>=1){
-        stars[i] = 'full';
-      }else if(starNum>=0.5){
-        stars[i] = 'half';
-      }else{
-        stars[i] = 'no';
-      }
-      starNum--;
-      i++;
-    }while(i<5)
-    return stars;
-  },
-  //加载动画
-  loading:function(){
-    var animation = wx.createAnimation({
-      duration: 1000,
-      timingFunction: "ease"
-    })
-    animation.opacity(1).step()
-    this.setData({
-      animationData:animation.export()
-    })
-  },
-  //将数据进行本地存储
-  storeData: function(date,movieData){
-    wx.setStorage({
-      key:"movie",
-      data:{
-        date:date,
-        movieData:movieData
-      }
-    })
-  }
+
+        for(var i = 0;i < MonArray.length;i++){
+            for(var j = 0;j < MonArray[i].length;j++){
+                if(typeof(MonArray[i][j]) == 'string' || MonArray[i][j].num == eId){
+                    continue;
+                }
+                MonArray[i][j].isShowDayInfo = false;
+            }
+        }
+
+        this.setData({
+            MonthDayArray:MonArray,
+            toYear:data.yearNum,
+            toMonth:data.monthNum,
+            toDate:eId,
+            fromToday:d.getFromTodayDays(eId, data.monthNum - 1, data.yearNum),
+            nongliDetail:CN_Date(data.yearNum, data.monthNum, eId),
+        })
+    },
+
+    monthTouch:function(e){
+        var beginX = e.target.offsetLeft;
+        var endX = e.changedTouches[0].clientX;
+        if(beginX - endX > 125){
+            this.nextMonth_Fn();
+        }
+        else if(beginX - endX < -125){
+            this.lastMonth_Fn();
+        }
+    },
+
+    nextMonth_Fn:function(){
+        var n = this.data.monthNum;
+        var y =this.data.yearNum;
+        if(n == 12){
+            this.setData({
+                monthNum:1,
+                yearNum:y + 1,
+            });
+        }
+        else{
+            this.setData({
+                monthNum:n + 1,
+            });
+        }
+        this.calcMonthDayArray();
+    },
+
+    lastMonth_Fn:function(){
+        var n = this.data.monthNum;
+        var y =this.data.yearNum;
+        if(n == 1){
+            this.setData({
+                monthNum:12,
+                yearNum:y - 1,
+            });
+        }
+        else{
+            this.setData({
+                monthNum:n - 1,
+            });
+        }
+        this.calcMonthDayArray();
+    },
+
+    calcMonthDayArray:function(){
+        var data = this.data;
+        var dateArray = d.paintCalendarArray(data.monthNum, data.yearNum);
+
+        //如果不是当年当月，自动选中1号
+        var notToday = (data.monthNum != t.getMonth() + 1 || data.yearNum != t.getFullYear());
+        if(notToday){
+            for(var i = 0;i < dateArray[0].length;i++){
+                if(dateArray[0][i].num == 1){
+                    dateArray[0][i].isShowDayInfo = true;
+                }
+            }
+        }
+
+        this.setData({
+            MonthDayArray:dateArray,
+            toYear:notToday ? this.data.yearNum : t.getFullYear(),
+            toMonth:notToday ? this.data.monthNum : t.getMonth() + 1,
+            toDate:notToday ? 1 : t.getDate(),
+            fromToday:notToday ? d.getFromTodayDays(1, data.monthNum - 1, data.yearNum) : '今天',
+            nongliDetail:notToday ? CN_Date(data.yearNum, data.monthNum, 1) : CN_Date(t.getFullYear(), t.getMonth() + 1, t.getDate()),
+        })
+    }
+    
 })

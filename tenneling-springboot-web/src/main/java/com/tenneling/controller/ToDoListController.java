@@ -42,4 +42,12 @@ public class ToDoListController {
         log.info("新增待办列表：{}",toDoList);
         return toDoListService.insertToDoList(toDoList);
     }
+
+    @ResponseBody
+    @PostMapping(value = "/deleteToDoList")
+    @ApiOperation(value="删除待办列表", notes="删除待办列表", httpMethod = "POST")
+    public ResCommonBody deleteToDoList(@RequestBody ToDoList toDoList){
+        log.info("删除待办列表：{}",toDoList);
+        return toDoListService.deleteToDoList(toDoList);
+    }
 }
