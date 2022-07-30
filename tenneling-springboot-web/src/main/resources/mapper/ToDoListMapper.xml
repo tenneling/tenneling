@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tenneling.dao.ToDoListMapper" >
+
+    <resultMap id="BaseResultMap" type="com.tenneling.entity.base.ToDoList" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="openId" property="openid" jdbcType="VARCHAR" />
+        <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+        <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+        <result column="is_alert" property="isAlert" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, openId, start_time, end_time, is_alert, status, content, create_user, create_time, 
+        update_user, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from to_do_list
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByUserId" resultType="com.tenneling.entity.base.ToDoList">
+        select
+        <include refid="Base_Column_List" />
+        from to_do_list
+        where openId = #{openid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from to_do_list
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.tenneling.entity.base.ToDoList" >
+        insert into to_do_list (id, openId, start_time, 
+            end_time, is_alert, status, 
+            content, create_user, create_time, 
+            update_user, update_time)
+        values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+            #{endTime,jdbcType=VARCHAR}, #{isAlert,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+            #{content,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+            #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.ToDoList" >
+        update to_do_list
+        <set >
+            <if test="openid != null" >
+                openId = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null" >
+                start_time = #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null" >
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isAlert != null" >
+                is_alert = #{isAlert,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null" >
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

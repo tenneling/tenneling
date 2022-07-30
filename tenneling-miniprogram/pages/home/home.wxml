@@ -26,16 +26,15 @@
   </view>
   </form>
   <view class="list-wrap" wx:if="{{lists.length>0}}">
-    <view wx:for="{{lists}}" wx:if="{{showAll ||(!showAll && !item.done)}}" id="{{item.id}}" class="{{item.done?'done list':'list'}}">        
+    <view wx:for="{{lists}}" wx:if="{{showAll ||(!showAll && !item.status)}}" id="{{item.id}}" class="{{item.status?'done list':'list'}}">        
         <text>{{index+1}}:</text>
         <text data-id ="{{index}}"  class="cnt" bindtap="toChange" >{{item.content}}</text>
-        <view hidden="{{!item.editing}}" class="edit-wrap">
+        <view hidden="{{!item.status}}" class="edit-wrap">
             <input class="ipt-edit" value="{{item.content}}"  data-id="{{index}}" bindinput='iptEdit' />
             <button class="btn btn-edit" data-id="{{index}}" bindtap="saveEdit">修改</button>
         </view>
-        
-        <text class="time"> {{item.beginTime}}-{{item.finishTime}}</text>
-        <icon class="ico-done" bindtap="setDone" data-id="{{index}}" type="success_no_circle" size='18' color="{{item.done?'#d7d7d7':'#6fa6cf'}}" />
+        <text class="time"> {{item.startTime}}-{{item.endTime}}</text>
+        <icon class="ico-done" bindtap="setDone" data-id="{{index}}" type="success_no_circle" size='18' color="{{item.status?'#d7d7d7':'#6fa6cf'}}" />
         <icon class="ico-delete" bindtap="toDelete" data-id="{{index}}" type='cancel' size='20' color="#6fa6cf" />
     </view>
     <view class="footer">

@@ -30,9 +30,7 @@ Page({
   },
   onLoad: function () {
     var that = this;
-    console.log(that);
     const openid = wx.getStorageSync('openid');
-    console.log(openid);
     // 加载列表数据
     wx.request({
       url: 'http://localhost:8080/getToDoList', //测试api
