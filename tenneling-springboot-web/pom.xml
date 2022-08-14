@@ -8,6 +8,7 @@
         <version>2.7.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <packaging>war</packaging>
     <groupId>com.springboot</groupId>
     <artifactId>tenneling</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -16,6 +17,17 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -153,6 +165,7 @@
             <artifactId>httpcore</artifactId>
             <version>4.4.10</version>
         </dependency>
+
     </dependencies>
 
 </project>

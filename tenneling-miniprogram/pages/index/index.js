@@ -44,7 +44,7 @@ Page({
         console.log(res);
         const openid = wx.getStorageSync('openid');
         wx.request({
-          url: 'http://localhost:8080/saveUser', //测试api
+          url: 'http://192.168.0.112:8080/saveUser', //测试api
           method: 'post',
           data: {
             nickName : res.userInfo.nickName,

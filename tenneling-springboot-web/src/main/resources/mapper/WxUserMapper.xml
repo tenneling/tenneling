@@ -55,8 +55,8 @@
                 #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR},
                 #{unionid,jdbcType=VARCHAR}, #{watermark,jdbcType=VARCHAR}, #{rawdata,jdbcType=VARCHAR},
                 #{cloudid,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{email,jdbcType=VARCHAR},
-                #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR},
-                #{updateTime,jdbcType=VARCHAR})
+                'system', date_format(SYSDATE(),'yyyy/MM/dd hh:mm:ss'),
+                'system',date_format(SYSDATE(),'yyyy/MM/dd hh:mm:ss'))
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.WxUser" >
@@ -110,17 +110,13 @@
             <if test="createTime != null" >
                 create_time = #{createTime,jdbcType=VARCHAR},
             </if>
-            <if test="updateUser != null" >
-                update_user = #{updateUser,jdbcType=VARCHAR},
-            </if>
-            <if test="updateTime != null" >
-                update_time = #{updateTime,jdbcType=VARCHAR},
-            </if>
+                update_user = 'system',
+                update_time = date_format(SYSDATE(),'yyyy/MM/dd hh:mm:ss')
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="getWxUserByOpenId" resultMap="BaseResultMap">
-        select * from wx_user where openId = #{openId} limit 1
+        select * from wx_user where openId = #{openId}  limit 1
     </select>
 </mapper>

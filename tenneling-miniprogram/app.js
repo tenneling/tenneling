@@ -18,7 +18,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if (res.code) {
           wx.request({
-            url: 'http://localhost:8080/userLogin', //测试api
+            url: 'http://192.168.0.112:8080/userLogin', //测试api
             method: 'post',
             data: {
               code: res.code, //用户登录凭证，有效期5分钟

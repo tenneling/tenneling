@@ -4,6 +4,9 @@
     "pages/activity/activity",
     "pages/auth/auth",
     "pages/discover/discover",
+    "pages/discover/calendar/calendar",
+    "pages/discover/memento/memento",
+    "pages/discover/fiveInsurance/fiveInsurance",
     "pages/mine/mine",
     "pages/home/home",
     "component/activity-form/index"
