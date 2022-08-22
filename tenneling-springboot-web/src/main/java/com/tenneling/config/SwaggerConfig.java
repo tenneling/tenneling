@@ -3,6 +3,7 @@ package com.tenneling.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -18,11 +19,13 @@ public class SwaggerConfig {
                 .apiInfo(new ApiInfoBuilder()
                         .title("tenneling APIs")
                         .description("我束缚自己，就像别人放纵自己一样正常，对于这种自我的严厉要求，并没有让我觉得厌烦，反而感到高兴。我对以后的追求，其实不是幸福本身，而是在赢取幸福的过程中我所花费的无限努力")
+                        .termsOfServiceUrl("http://www.lescouple.top:8012/doc.html ")
                         .version("1.0")
                         .build())
                 .groupName("v1.0")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.tenneling.controller"))
+                .paths(PathSelectors.any())
                 .build() ;
     }
 

@@ -44,7 +44,7 @@ Page({
         console.log(res);
         const openid = wx.getStorageSync('openid');
         wx.request({
-          url: 'http://192.168.0.112:8080/saveUser', //测试api
+          url: 'http://www.lescouple.top:8012/saveUser', //测试api
           method: 'post',
           data: {
             nickName : res.userInfo.nickName,
