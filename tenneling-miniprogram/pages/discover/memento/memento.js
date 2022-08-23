@@ -42,7 +42,7 @@ Page({
   },
   //加载列表数据
  async listdata(){
-  const  that = this
+  const  that = this;
      // 加载列表数据
      wx.request({
       url: 'http://www.lescouple.top:8012/getToDoList', //测试api
