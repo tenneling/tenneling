@@ -1,20 +1,12 @@
 package com.tenneling.config;
 
-import com.tenneling.job.GetWeiXinAccessTokenTask;
-import com.tenneling.job.JobFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.JobDetailFactoryBean;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 @Configuration
 public class QuartzConfig {
     /**
      * 1、创建Job对象
-     */
+     *//*
     @Bean
     public JobDetailFactoryBean jobDetailFactoryBean(){
         JobDetailFactoryBean factoryBean=new JobDetailFactoryBean();
@@ -23,10 +15,10 @@ public class QuartzConfig {
         return factoryBean;
     }
 
-    /**
+    *//**
      * 2、创建Trigger对象
      * 使用setRepeatInterval
-     */
+     *//*
     @Bean
     public SimpleTriggerFactoryBean simpleTriggerFactoryBean(@Qualifier("jobDetailFactoryBean") JobDetailFactoryBean jobDetailFactoryBean){
         SimpleTriggerFactoryBean factoryBean=new SimpleTriggerFactoryBean();
@@ -38,11 +30,11 @@ public class QuartzConfig {
         factoryBean.setRepeatCount(5);
         return factoryBean;
     }
-    /*
+    *//*
      * 创建Trigger对象
      * 功能描述:
      * 使用cronExpression表达式
-     **/
+     **//*
     @Bean
     public CronTriggerFactoryBean cronTriggerFactoryBean(@Qualifier("jobDetailFactoryBean") JobDetailFactoryBean jobDetailFactoryBean){
         CronTriggerFactoryBean factoryBean=new CronTriggerFactoryBean();
@@ -52,11 +44,11 @@ public class QuartzConfig {
         return factoryBean;
     }
 
-    /**
+    *//**
      * 3、创建Scheduler,一个触发器可以执行多个任务
      * 参数1选择需要的bean类型
      * 参数2把自己注入好的JobFactory加入其中就可以访问数据库了
-     */
+     *//*
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(CronTriggerFactoryBean simpleTriggerFactoryBean, JobFactory jobFactory){
         SchedulerFactoryBean factoryBean=new SchedulerFactoryBean();
@@ -64,5 +56,5 @@ public class QuartzConfig {
         factoryBean.setTriggers(simpleTriggerFactoryBean.getObject());
         factoryBean.setJobFactory(jobFactory);
         return factoryBean;
-    }
+    }*/
 }

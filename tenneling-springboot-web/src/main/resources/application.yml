@@ -22,5 +22,9 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-server.port : 8012
+server.port : 443
 logging.config.classpath : logback-spring.xml
+
+gongZhongHao:
+  appId: wxfc8f37fa0e7f48ad
+  appSecret: 8a2702c0cacb416eef186eec04728b90

@@ -1,4 +1,4 @@
-package com.tenneling.job;
+package com.tenneling.job.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -22,13 +22,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class GetWeiXinAccessTokenTask implements Job {
+public class GetGongZhongHaoAccessTokenTask implements Job {
 
     @Value("${wechat.accessTokenUrl}")
     private String requestUrl ;
-    @Value("${wechat.appSecret}")
+    @Value("${gongZhongHao.appSecret}")
     private String secret ;
-    @Value("${wechat.appId}")
+    @Value("${gongZhongHao.appId}")
     private String appid ;
     @Autowired
     private SysParaMapper sysParaMapper;
@@ -36,7 +36,7 @@ public class GetWeiXinAccessTokenTask implements Job {
     @SneakyThrows
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.info("获取微信定时AccessToken任务启动");
+        log.info("获取微信公众号定时AccessToken任务启动");
 
         HttpHeaders headers = new HttpHeaders();
         headers.clear();
@@ -59,7 +59,7 @@ public class GetWeiXinAccessTokenTask implements Job {
         JSONObject responseJson= JSON.parseObject(responseString);
         log.info("respon json from API->"+responseJson);
         String value = String.valueOf(responseJson.get("access_token")) ;
-        SysPara sysPara = sysParaMapper.getByKey("ACCESS_TOKEN");
+        SysPara sysPara = sysParaMapper.getByKey("GZH_ACCESS_TOKEN");
         sysPara.setParaValue(value);
         sysParaMapper.updateByPrimaryKeySelective(sysPara);
         log.info("更新成功，当前值为{}",value);

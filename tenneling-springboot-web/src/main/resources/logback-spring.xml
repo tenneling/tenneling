@@ -3,8 +3,8 @@
 
     <!-- Log file path -->
     <!-- 设置全局log的变量路径 -->
-    <property name="log.path" value="D:/Java/logs" />
-    <!--<property name="log.path" value="/opt/tomcat8.5/logs" />-->
+    <!--<property name="log.path" value="D:/Java/logs" />-->
+    <property name="log.path" value="/opt/tomcat8.5/logs" />
 
     <!-- 设置名称为STDOUT的appender为一个控制台输出appender -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
