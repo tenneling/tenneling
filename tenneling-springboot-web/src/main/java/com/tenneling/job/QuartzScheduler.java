@@ -1,7 +1,6 @@
 package com.tenneling.job;
 
 
-import com.tenneling.job.impl.GetGongZhongHaoAccessTokenTask;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
@@ -209,7 +208,7 @@ public class QuartzScheduler {
     private void startJob(Scheduler scheduler) throws SchedulerException {
         // 通过JobBuilder构建JobDetail实例，JobDetail规定只能是实现Job接口的实例
         // JobDetail 是具体Job实例
-        JobDetail jobDetail = JobBuilder.newJob(GetGongZhongHaoAccessTokenTask.class).withIdentity("job1", "group1").build();
+        /*JobDetail jobDetail = JobBuilder.newJob(GetGongZhongHaoAccessTokenTask.class).withIdentity("job1", "group1").build();
         // 基于表达式构建触发器
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
         // CronTrigger表达式触发器 继承于Trigger
@@ -220,7 +219,7 @@ public class QuartzScheduler {
         // 启动
         if (!scheduler.isShutdown()) {
             scheduler.start();
-        }
+        }*/
     }
 
     /**

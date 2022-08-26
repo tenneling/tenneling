@@ -70,3 +70,18 @@ CREATE TABLE tenneling.`to_do_list`
     update_time varchar(50) COMMENT '更新时间',
     PRIMARY KEY (id)
 );
+
+CREATE TABLE tenneling.`ln_job_detail`
+(
+    job_id       varchar(64) COMMENT '任务ID',
+    job_name      varchar(128) COMMENT '任务名称',
+    description      varchar(128) COMMENT '描述',
+    bean_name  varchar(128) COMMENT '类名',
+    cron    varchar(128) COMMENT '时间表达式',
+    status    varchar(128) COMMENT '状态',
+    create_user varchar(50) COMMENT '创建人',
+    create_time varchar(50) COMMENT '创建时间',
+    update_user varchar(50) COMMENT '更新人',
+    update_time varchar(50) COMMENT '更新时间',
+    PRIMARY KEY (job_id)
+);

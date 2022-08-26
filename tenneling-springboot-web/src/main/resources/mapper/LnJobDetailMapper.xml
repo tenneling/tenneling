@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tenneling.dao.LnJobDetailMapper" >
+
+    <resultMap id="BaseResultMap" type="com.tenneling.entity.base.LnJobDetail" >
+        <id column="job_id" property="jobId" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="bean_name" property="beanName" jdbcType="VARCHAR" />
+        <result column="cron" property="cron" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        job_id, job_name, description, bean_name, cron, status, create_user, create_time, 
+        update_user, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from ln_job_detail
+        where job_id = #{jobId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from ln_job_detail
+        where job_id = #{jobId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.tenneling.entity.base.LnJobDetail" >
+        insert into ln_job_detail (job_id, job_name, description, 
+            bean_name, cron, status, 
+            create_user, create_time, update_user, 
+            update_time)
+        values (#{jobId,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+            #{beanName,jdbcType=VARCHAR}, #{cron,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+            #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.LnJobDetail" >
+        update ln_job_detail
+        <set >
+            <if test="jobName != null" >
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="beanName != null" >
+                bean_name = #{beanName,jdbcType=VARCHAR},
+            </if>
+            <if test="cron != null" >
+                cron = #{cron,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null" >
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where job_id = #{jobId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectAllList" resultMap="BaseResultMap">
+        select * from ln_job_detail where status='A'
+    </select>
+</mapper>

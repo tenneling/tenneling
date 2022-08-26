@@ -20,7 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("getGongZhongHaoAccessTokenTask")
 @Slf4j
 public class GetGongZhongHaoAccessTokenTask implements Job {
 
