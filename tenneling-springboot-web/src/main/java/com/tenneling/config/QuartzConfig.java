@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class QuartzConfig {
+    //单个job
     /**
      * 1、创建Job对象
      *//*

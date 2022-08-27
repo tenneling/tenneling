@@ -5,6 +5,7 @@
     <resultMap id="BaseResultMap" type="com.tenneling.entity.base.LnJobDetail" >
         <id column="job_id" property="jobId" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
         <result column="description" property="description" jdbcType="VARCHAR" />
         <result column="bean_name" property="beanName" jdbcType="VARCHAR" />
         <result column="cron" property="cron" jdbcType="VARCHAR" />
@@ -16,7 +17,7 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        job_id, job_name, description, bean_name, cron, status, create_user, create_time, 
+        job_id, job_name, job_group,description, bean_name, cron, status, create_user, create_time,
         update_user, update_time
     </sql>
 
@@ -33,11 +34,12 @@
     </delete>
 
     <insert id="insert" parameterType="com.tenneling.entity.base.LnJobDetail" >
-        insert into ln_job_detail (job_id, job_name, description, 
+        insert into ln_job_detail (job_id, job_name, job_group,description,
             bean_name, cron, status, 
             create_user, create_time, update_user, 
             update_time)
-        values (#{jobId,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+        values (#{jobId,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR},
+                #{jobGroup,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
             #{beanName,jdbcType=VARCHAR}, #{cron,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
             #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, 
             #{updateTime,jdbcType=VARCHAR})
@@ -48,6 +50,9 @@
         <set >
             <if test="jobName != null" >
                 job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null" >
+                job_group = #{jobGroup,jdbcType=VARCHAR},
             </if>
             <if test="description != null" >
                 description = #{description,jdbcType=VARCHAR},

@@ -75,6 +75,7 @@ CREATE TABLE tenneling.`ln_job_detail`
 (
     job_id       varchar(64) COMMENT '任务ID',
     job_name      varchar(128) COMMENT '任务名称',
+    job_group       varchar(64) COMMENT '任务组',
     description      varchar(128) COMMENT '描述',
     bean_name  varchar(128) COMMENT '类名',
     cron    varchar(128) COMMENT '时间表达式',
@@ -84,4 +85,19 @@ CREATE TABLE tenneling.`ln_job_detail`
     update_user varchar(50) COMMENT '更新人',
     update_time varchar(50) COMMENT '更新时间',
     PRIMARY KEY (job_id)
+);
+
+CREATE TABLE tenneling.`wf_ru_job`
+(
+    serial_no       varchar(128) COMMENT '流水号',
+    business_key      varchar(128) COMMENT '业务编号',
+    job_type       varchar(64) COMMENT '异步作业类型',
+    bean_name  varchar(128) COMMENT '类名',
+    retry_time    varchar(128) COMMENT '重试次数',
+    error_info    varchar(128) COMMENT '错误信息',
+    create_user varchar(50) COMMENT '创建人',
+    create_time varchar(50) COMMENT '创建时间',
+    update_user varchar(50) COMMENT '更新人',
+    update_time varchar(50) COMMENT '更新时间',
+    PRIMARY KEY (serial_no)
 );

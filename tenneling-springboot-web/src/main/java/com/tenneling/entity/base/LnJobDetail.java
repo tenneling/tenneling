@@ -26,6 +26,11 @@ public class LnJobDetail {
     private String jobName;
 
     /**
+     * 任务组
+     */
+    private String jobGroup;
+
+    /**
      * 描述
      */
     private String description;
