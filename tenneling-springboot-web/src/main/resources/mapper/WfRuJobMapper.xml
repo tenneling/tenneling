@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tenneling.dao.WfRuJobMapper" >
+
+    <resultMap id="BaseResultMap" type="com.tenneling.entity.base.WfRuJob" >
+        <id column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+        <result column="business_key" property="businessKey" jdbcType="VARCHAR" />
+        <result column="job_type" property="jobType" jdbcType="VARCHAR" />
+        <result column="bean_name" property="beanName" jdbcType="VARCHAR" />
+        <result column="retry_time" property="retryTime" jdbcType="VARCHAR" />
+        <result column="error_info" property="errorInfo" jdbcType="VARCHAR" />
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        serial_no, business_key, job_type, bean_name, retry_time, error_info, create_user, 
+        create_time, update_user, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from wf_ru_job
+        where serial_no = #{serialNo,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from wf_ru_job
+        where serial_no = #{serialNo,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.tenneling.entity.base.WfRuJob" >
+        insert into wf_ru_job (serial_no, business_key, job_type, 
+            bean_name, retry_time, error_info, 
+            create_user, create_time, update_user, 
+            update_time)
+        values (#{serialNo,jdbcType=VARCHAR}, #{businessKey,jdbcType=VARCHAR}, #{jobType,jdbcType=VARCHAR}, 
+            #{beanName,jdbcType=VARCHAR}, #{retryTime,jdbcType=VARCHAR}, #{errorInfo,jdbcType=VARCHAR}, 
+            #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.WfRuJob" >
+        update wf_ru_job
+        <set >
+            <if test="businessKey != null" >
+                business_key = #{businessKey,jdbcType=VARCHAR},
+            </if>
+            <if test="jobType != null" >
+                job_type = #{jobType,jdbcType=VARCHAR},
+            </if>
+            <if test="beanName != null" >
+                bean_name = #{beanName,jdbcType=VARCHAR},
+            </if>
+            <if test="retryTime != null" >
+                retry_time = #{retryTime,jdbcType=VARCHAR},
+            </if>
+            <if test="errorInfo != null" >
+                error_info = #{errorInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null" >
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where serial_no = #{serialNo,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
