@@ -44,7 +44,7 @@ Page({
         console.log(res);
         const openid = wx.getStorageSync('openid');
         wx.request({
-          url: 'http://www.lescouple.top:8012/saveUser', //测试api
+          url: 'https://www.lescouple.top:9092/saveUser', //测试api
           method: 'post',
           data: {
             nickName : res.userInfo.nickName,

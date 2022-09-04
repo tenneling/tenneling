@@ -18,7 +18,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if (res.code) {
           wx.request({
-            url: 'http://www.lescouple.top:8012/userLogin', //测试api
+            url: 'https://www.lescouple.top:9092/userLogin', //测试api
             method: 'post',
             data: {
               code: res.code, //用户登录凭证，有效期5分钟

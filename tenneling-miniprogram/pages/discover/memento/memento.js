@@ -45,7 +45,7 @@ Page({
   const  that = this;
      // 加载列表数据
      wx.request({
-      url: 'http://www.lescouple.top:8012/getToDoList', //测试api
+      url: 'https://www.lescouple.top:9092/getToDoList', //测试api
       method: 'GET',
       data: {
         openid: that.data.openid,
@@ -86,7 +86,7 @@ Page({
       finish = this.data.curRange[this.data.curFinish];
     if (cnt) {
       wx.request({
-        url: 'http://www.lescouple.top:8012/insertToDoList', //测试api
+        url: 'https://www.lescouple.top:9092/insertToDoList', //测试api
         method: 'POST',
         data: {
           content: cnt,
@@ -122,7 +122,7 @@ Page({
     let i = e.target.dataset.id;
     var that = this;
     wx.request({
-      url: 'http://www.lescouple.top:8012/updateToDoStatus', //测试api
+      url: 'https://www.lescouple.top:9092/updateToDoStatus', //测试api
       method: 'POST',
       data: {
         openid: that.data.openid,
@@ -143,7 +143,7 @@ Page({
     let i = e.target.dataset.id;
     const that = this
     wx.request({
-      url: 'http://www.lescouple.top:8012/deleteToDoList', 
+      url: 'https://www.lescouple.top:9092/deleteToDoList', 
       method: 'POST',
       data: {
         id: i
@@ -167,7 +167,7 @@ Page({
     const  that = this
      // 加载列表数据
      wx.request({
-      url: 'http://www.lescouple.top:8012/getToDoList', //测试api
+      url: 'https://www.lescouple.top:9092/getToDoList', //测试api
       method: 'GET',
       data: {
         openid: that.data.openid

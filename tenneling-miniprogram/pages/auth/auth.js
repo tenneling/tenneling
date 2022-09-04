@@ -7,7 +7,7 @@ Page({
   getPhoneNumber: function (e) {
     console.log(e)
     wx.request({
-      url: 'http://www.lescouple.top:8012/getPhone',
+      url: 'https://www.lescouple.top:9092/getPhone',
       data: {
         'code': e.detail.code
       },

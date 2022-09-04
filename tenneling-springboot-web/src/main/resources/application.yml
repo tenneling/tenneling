@@ -27,10 +27,19 @@ spring:
     username: guest
     password: guest
 
-server.port : 443
 logging.config.classpath : logback-spring.xml
 
 gongZhongHao:
   appId: wxfc8f37fa0e7f48ad
   appSecret: 8a2702c0cacb416eef186eec04728b90
 
+http:
+  port : 9091
+
+server:
+  port : 9092
+  ssl:
+    key-store: classpath:8391091.pfx
+    key-store-type: "PKCS12"
+    key-store-password: GNqq6oP3
+    enabled: true
