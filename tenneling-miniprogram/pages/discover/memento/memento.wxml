@@ -7,14 +7,14 @@
  <view class="input-wrap">    
       <input type="text" value='{{curIpt}}' returnKeyType='send' placeholder="请输入待做的事" class="ipt-main"  bindinput='iptChange' />     
       <view class="flex-row flex-time" wx:if="{{curIpt}}">
-            <picker range='{{curRange}}' value='{{curBegin}}' bindchange='beginChange'  class="pick-time time">
+            <picker value='{{curBegin}}' mode="date" bindchange='beginChange'  class="pick-time time">
                 <text>
-                    开始时间：{{curRange[curBegin]}}
+                    开始时间：{{curBegin}}
                 </text>
             </picker>  
-            <picker range='{{curRange}}' value='{{curFinish}}' bindchange='finishChange'  class="pick-time time">
+            <picker value='{{curFinish}}' mode="date"  bindchange='finishChange'  class="pick-time time">
                 <text>
-                    结束时间：{{curRange[curFinish]}}
+                    结束时间：{{curFinish}}
                 </text>
             </picker>  
             <label class="time"><switch class="switch" bindchange="switchInfo" />提醒</label>

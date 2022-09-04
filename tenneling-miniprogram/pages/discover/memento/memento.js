@@ -1,5 +1,6 @@
 
 var util = require("../../../utils/util.js");
+var moment = require("../../../utils/memento.js");
 
 //更改数组 第三个参数是对象
 function editArr(arr, i, editCnt) {
@@ -17,8 +18,8 @@ Page({
     showAll: true,
     lists: [],
     curRange: [],
-    curBegin: 0,
-    curFinish: 1,
+    curBegin: moment(util.setTimeHalf()[0]).format('YYYY-MM-DD'),
+    curFinish: moment(util.setTimeHalf()[1]).format('YYYY-MM-DD'),
     remind: [],
     isAlert: false,
     openid: wx.getStorageSync('openid')
@@ -34,10 +35,8 @@ Page({
   },
   //可供选择的时间数组和已输入文本
   iptChange(e) {
-    let timeArr = util.setTimeHalf();
     this.setData({
       curIpt: e.detail.value,
-      curRange: timeArr
     })
   },
   //加载列表数据
@@ -66,8 +65,6 @@ Page({
   },
   //是否提醒
   switchInfo(e) {
-    console.log(e);
-    console.log(e.detail.value);
     this.setData({
       isAlert: e.detail.value
     })
@@ -82,8 +79,8 @@ Page({
   formSubmit() {
     const  that = this
     let cnt = this.data.curIpt,
-      begin = this.data.curRange[this.data.curBegin],
-      finish = this.data.curRange[this.data.curFinish];
+      begin = this.data.curBegin,
+      finish = this.data.curFinish;
     if (cnt) {
       wx.request({
         url: 'https://www.lescouple.top:9092/insertToDoList', //测试api
@@ -110,7 +107,7 @@ Page({
   beginChange(e) {
     this.setData({
       curBegin: e.detail.value,
-      curFinish: Number(e.detail.value) + 1
+      curFinish: moment(moment(new Date(e.detail.value)) + 3600 * 1000 *24).format('YYYY-MM-DD'),
     })
   },
   finishChange(e) {
