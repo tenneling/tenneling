@@ -2,6 +2,7 @@ package com.tenneling.job;
 
 import com.tenneling.dao.LnJobDetailMapper;
 import com.tenneling.entity.base.LnJobDetail;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Component
 @Order(value = 1)
+@Slf4j
 public class QuartzJobListener implements CommandLineRunner {
 
     @Autowired
@@ -45,6 +47,7 @@ public class QuartzJobListener implements CommandLineRunner {
                                 .getCron());
                         //按新的cronExpression表达式构建一个新的trigger
                         trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup()).withSchedule(scheduleBuilder).build();
+                        log.info("任务:{},时间表达式:{}",job.getJobId(),job.getCron());
                         scheduler.scheduleJob(jobDetail, trigger);
                     } else {
                         // Trigger已存在，那么更新相应的定时设置
@@ -54,6 +57,7 @@ public class QuartzJobListener implements CommandLineRunner {
                         //按新的cronExpression表达式重新构建trigger
                         trigger = trigger.getTriggerBuilder().withIdentity(triggerKey)
                                 .withSchedule(scheduleBuilder).build();
+                        log.info("任务:{},时间表达式:{}",job.getJobId(),job.getCron());
                         //按新的trigger重新设置job执行
                         scheduler.rescheduleJob(triggerKey, trigger);
                     }
