@@ -39,25 +39,14 @@ function halfHour(){
   }
   return timeArr;
 }
+
 let timeArr = halfHour();
 
+// 起始时间默认当天，结束时间默认下一天
 function setTimeHalf(){
-  var thisDate = new Date(), 
-  thisTime = formatTime2(thisDate),
-  lastTimeArr = [],
-  index = 0;
-  
- timeArr.map(function(t,i){
-    let tArr = t.split(":");
-    if (thisTime[0] >= Number(tArr[0])){
-      index = thisTime[1]<=30?i:i+1;
-    }
- })
- lastTimeArr = timeArr.slice(index);
- if (thisTime[1] !== 0 && thisTime[1]!==30){
-    lastTimeArr.unshift(thisTime[0]+":"+thisTime[1]);
-  }
-  return lastTimeArr;
+  var thisDate =  new Date().getTime()
+  var afterDate =  new Date().getTime() + 3600 * 1000 * 24 ;
+  return [thisDate, afterDate]
 }
 
 module.exports = {
