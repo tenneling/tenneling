@@ -49,8 +49,8 @@
             update_user, update_time)
         values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
             #{endTime,jdbcType=VARCHAR}, #{isAlert,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-            #{content,jdbcType=VARCHAR}, 'system', date_format('yyyy/MM/dd hh:mm:ss',SYSDATE()),
-                'system',date_format('yyyy/MM/dd hh:mm:ss',SYSDATE()))
+            #{content,jdbcType=VARCHAR}, 'system', SYSDATE(),
+                'system',SYSDATE())
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.ToDoList" >
@@ -81,7 +81,7 @@
                 create_time = #{createTime,jdbcType=VARCHAR},
             </if>
             update_user = 'system',
-            update_time = date_format('yyyy/MM/dd hh:mm:ss',SYSDATE())
+            update_time = SYSDATE()
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>

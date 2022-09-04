@@ -55,8 +55,8 @@
                 #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR},
                 #{unionid,jdbcType=VARCHAR}, #{watermark,jdbcType=VARCHAR}, #{rawdata,jdbcType=VARCHAR},
                 #{cloudid,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{email,jdbcType=VARCHAR},
-                'system', date_format(SYSDATE(),'yyyy/MM/dd hh:mm:ss'),
-                'system',date_format(SYSDATE(),'yyyy/MM/dd hh:mm:ss'))
+                'system', SYSDATE(),
+                'system',SYSDATE())
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.tenneling.entity.base.WxUser" >
@@ -111,7 +111,7 @@
                 create_time = #{createTime,jdbcType=VARCHAR},
             </if>
                 update_user = 'system',
-                update_time = date_format(SYSDATE(),'yyyy/MM/dd hh:mm:ss')
+                update_time = SYSDATE()
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
